@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+
+{% block photo %}
+    {% if user.photo %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user.email }}</span>
+{% endblock %}
+
+{% block content %}
+    
+    <style>
+
+    body{
+        background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
+        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+    }
+
+
+    .semestres{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        font-size: 20px;
+        color: white;
+        margin-bottom:170px;
+        
+    }
+
+    .semestres li {
+        margin-bottom: 20px;
+        color: whatsapp.color;
+        border: 1px solid lightblue;
+        background-color: rgba(46, 101, 115, 1);
+       
+        
+        
+        /*font-style: italic;*/
+    }
+
+    .semestres a{
+        color: white;
+        text-decoration: none;
+        padding: 10px 10px;
+    }
+
+    .semestres a:hover{
+        background-color: rgba(46, 101, 115, 1);
+        color: white;
+        border: 1px solid whatsapp.color;
+        transition: background-color 0.3s ease;
+    }
+
+    </style>
+
+
+    <p> Vous avez là les anciens sujets de la classe ISEP2 de l'ENSAE de Dakar </p>
+    <p>Choisir le semestre :</p>
+
+<div class="semestres">
+    <ul>
+        <li><a href="{% url 'ensae-isep2-semestre1' %}">Semestre 1</a></li>
+        <li><a href="{% url 'ensae-isep2-semestre2' %}">Semestre 2</a></li>
+    </ul>
+
+</div>
+{% endblock %}

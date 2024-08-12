@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block photo %}
+    {% if user %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user.email }}</span>
+{% endblock %}
+
+{% block content %}
+
+<style>
+   body{
+        background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
+        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+    }
+
+</style>
+    <h2>Propositions de corrections pour le sujet {{sujet}} </h2><hr>
+    {% if corriges %}
+        <ul>
+            {% for corrige in corriges %}
+                <li class="liste" name-user="{{corrige.auteur}}" style="display:block;margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p style="font-weight:bold">Titre : {{ corrige.titre}}</p>
+                            {% if corrige.auteur == user %}
+                            <p>Posté par : Vous</p>
+                            {% else %}
+                            <p>Posté par : {{ corrige.auteur }}</p>
+                            {% endif %}
+                            <p>Posté le : {{ corrige.date }}</p>
+                            <p>Description : {{ corrige.description }}</p>
+                            <div style="display:inline;">
+                                <a style="margin-right:15px" href="{% url 'see_corrige' corrige.id %}">Ouvrir</a>
+                                <a href="{% url 'download_corrige' corrige.id %}">Télécharger</a>
+                            </div>
+                            
+                            <div class="supprimer" style="text-align: right;">
+                                <a style="margin-left:50px" href="{% url 'supprimer_corrige' corrige.id  %}">Supprimer ce post</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div><hr>
+                </li>
+                
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune proposition de correction pour ce sujet n'est disponible.</p>
+    {% endif %}
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+         // Sélectionne tous les liens ayant la classe '.supprimer' 
+        var liens = document.querySelectorAll('.supprimer');
+
+        liens.forEach(function(link) {
+            var corrige_auteur = link.closest('.liste').getAttribute('name-user');; // Récupère l'attribut 'name-user' du parent de chaque lien
+            var currentUser = `{{ user }}`; 
+            
+            if (corrige_auteur === currentUser) {
+                link.style.display = 'inline'; 
+            } else {
+                link.style.display = 'none'; 
+            }
+        });
+    });
+    </script>
+{% endblock %}

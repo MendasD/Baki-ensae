@@ -1,0 +1,134 @@
+
+{% load static %} <!-- on charge le dossier static -->
+<!-- <a href= "{% url 'login' %}"> Connectez vous ! </a> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>EducResa</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <!-- <link href="img/favicon.ico" rel="icon"> -->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+     <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- pour appliquer un style css à notre application -->
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+     /* Superposition de couleur */
+        .carousel-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 139, 0.4); /* Bleu clair avec transparence */
+            backdrop-filter: blur(5px); /* Effet de flou */
+            z-index: 1;
+        }
+
+        .carousel-caption {
+            z-index: 2;
+            top: 50%; /* Ajustez ce pourcentage pour déplacer le texte plus haut ou plus bas */
+            transform: translateY(-50%); /* pour centrer verticalement */
+        }
+
+        
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar & Carousel Start -->
+    
+    <div id="header-carousel" class="carousel slide carousel-fade " data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img style="background: rgba(9, 30, 62, .7);" class="w-100" src="{% static 'images/toutes_ecoles.jpg' %}" alt="ENSAE" width=100% height=700px>
+                    <div class="overlay"></div>
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">EducResa</h5>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn"> ENSAE-ISSEA-ENSEA</h1>
+                            <a href="{% url 'login' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Login</a>
+                            <a href="{% url 'signup' %}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Sign Up</a>
+                        </div>
+                    </div>
+                </div> 
+                <div class="carousel-item">
+                    <img class="w-100" src="{% static 'images/ensea.jpg' %}" alt="ENSEA" width=100% height=700px>
+                    <div class="overlay"></div>
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">EducResa</h5>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">ENSAE-ISSEA-ENSEA</h1>
+                            <a href="{% url 'login' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Se connecter</a>
+                            <a href="{% url 'signup' %}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Créer un compte</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!-- Navbar & Carousel End -->
+
+
+
+ <!-- Back to Top (btn btn-lg btn-primary  btn-lg-square rounded )-->
+    <a href="#" class="back-to-top"><i class="bi bi-arrow-up"></i></a>
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- jQuery (on importe d'abord Query, ensuite Waypoints et enfin CounterUp) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+    <!-- Inclure Owl Carousel JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <!-- Waypoints -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <!-- CounterUp (c'est utilisé pour l'effet de comptage)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+
+    
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'javascript/main.js' %}"></script>

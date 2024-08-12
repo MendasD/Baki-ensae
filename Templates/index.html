@@ -1,0 +1,98 @@
+{% extends "base.html" %}  <!-- on specifie le template parent/mère -->
+
+{% load static %} <!-- on charge le dossier static -->
+
+{% block photo %}
+    {% if user.photo %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user_email }}</span>
+{% endblock %}
+
+
+{% block content %}
+<style>
+    #accueil{
+        color: bisque;
+    }
+
+    #nbreuser{
+        color: bisque;
+        font-size: 20px;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .liens{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        font-size: 20px;
+        color: white;
+    }
+
+    .liens li {
+        margin-bottom: 20px;
+        color: whatsapp.color;
+        border: 1px solid lightblue;
+        background-color: rgba(46, 101, 115, 1);
+        
+        /*font-style: italic;*/
+    }
+
+    .liens a{
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+
+    .liens a:hover{
+        background-color: rgba(46, 101, 115, 1);
+        color: white;
+        border: 1px solid whatsapp.color;
+        transition: background-color 0.3s ease;
+    }
+
+    #bienvenue{
+        font-size: 50px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    body{
+        background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
+        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+    }
+
+    .container-fluid{
+        display: inline-block; /*pour le footer avec whatsapp */
+    }
+</style>
+
+    
+    <div id="bienvenue">
+    <h4 style="font-size: 60px;">Bienvenue sur EducResa</h4>
+    </div>
+
+    <h4 style="text-align:center; font-size:20px; padding:20px;">Sur cette plateforme, vous trouverez les anciennes épreuves en toutes les matières pour les differentes ecoles du RESA. Vous aurez la possibilité de proposer des corrections et également, d'echanger avec d'autres étudiants des écoles du RESA.</h4><br/><br/>
+    
+
+    <div class="liens">
+        <ul>
+            <li><a href="{% url 'Ensae' user_email %}">Ecole Nationale de la Statistique et de l'Analyse Economique (ENSAE)</a></li>
+            <li><a href="{% url 'Issea' user_email %}">Institut Sous-régionnal de Statistique et de l'Economie Appliquée (ISSEA)</a></li>
+            <li><a href="{% url 'Ensea' user_email %}">Ecole Nationale de la Statistique et de l'Economie Appliquée (ENSEA)</a></li>
+        </ul>
+    </div><hr>
+
+    <div id="nbreuser">
+        <h4 style="color:black;">Nombre d'utilisateurs à atteindre :</h4><h4 id="nombre" style="display:inline;" class="counter" data-toggle="counter-up"  >15000</h4> 
+        <h4 style="color:black;"> Nombre d'utilisateurs actuel : {{nombre_user}}</h4>
+    </div>
+    
+
+{% endblock  %}

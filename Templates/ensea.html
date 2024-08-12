@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block photo %}
+    {% if user.photo %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user_email }}</span>
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    body{
+        background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
+        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+    }
+
+     .classes{
+        display: flex;
+        /*justify-content: space-around;*/ /* ça c'est pour laisser l'espace autour, et ça sera un peu comme ci c'est sentré */
+        flex-wrap: wrap;
+        margin-top: 30px;
+        font-size: 20px;
+        color: white;
+        margin-bottom:90px;
+        margin-left: 10%;
+    }
+
+    .classes li {
+        margin-bottom: 20px;
+        color: whatsapp.color;
+        border: 1px solid lightblue;
+        background-color: rgba(46, 101, 115, 1);
+        
+        /*font-style: italic;*/
+    }
+
+    .classes a{
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+
+    .classes a:hover{
+        background-color: rgba(46, 101, 115, 1);
+        color: white;
+        border: 1px solid whatsapp.color;
+        transition: background-color 0.3s ease;
+    }
+
+
+    .container-fluid{
+       bottom: 0; 
+    }
+
+</style>
+
+
+<h3>Ici, vous aurez accès aux anciens sujets de l'ENSAE de Dakar.</h3>
+
+<div class="classes">
+<ul>
+    <li><a href="{% url 'ensea-as1'  %}">Analyste Statisticien première année (AS1)</a></li>
+    <li><a href="{% url 'ensea-as2'  %}">Analyste Statisticien deuxième année (AS2)</a></li>
+    <li><a href="{% url 'ensea-as3'  %}">Analyste Statisticien troisième année (AS3)</a></li> 
+    <li><a href="{% url 'ensea-ise1'  %}">Ingénieur statisticien Economiste première année (ISE1)</a></li>
+    <li><a href="{% url 'ensea-ise2'  %}">Ingénieur statisticien Economiste deuxième année (ISE2)</a></li>
+    <li><a href="{% url 'ensea-ise3'  %}">Ingénieur statisticien Economiste troisième année (ISE3)</a></li>
+</ul>
+</div>
+
+{% endblock %}
+

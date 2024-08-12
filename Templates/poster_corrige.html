@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block photo %}
+    {% if user %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user.email }}</span>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body{
+            background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
+            font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+        }
+
+    .publier{
+        margin-top: 30px;
+        margin-bottom: 30px;
+        margin-left: 50px;
+        margin-right: 50px;
+        justify-content: space-around;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        transition: box-shadow 0.3s ease;
+        align-items: center;
+        display: flex;
+        font-size:20px;
+
+    }
+
+</style>
+
+<h3>Merci pour ta contribution {{user|default:"expert"}}.</h3><br/>
+    <p>Les corrections que tu proposes seront publiées et visibles par d'autres. Toutefois, tu pourras les supprimer si tu te rends compte d'une erreur. </p>
+    <p>Si tu as des questions ou des remarques, n'hésite pas à nous contacter. Merci de nous aider à améliorer notre plateforme!</p><br/>
+
+<div class="publier">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Publier</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block photo %}
+    {% if user.photo %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user.email }}</span>
+{% endblock %}
+
+{% block content %}
+    <h2>Liste des Sujets pour ENSAE ISE2 Semestre 2</h2>
+    <p>Vous pouvez consulter les sujets, télécharger les documents, poster des corrections et voir les propositions de correction.</p>
+    <div style="text-align:right;">
+    <form id="search-form" method="post" >
+        {% csrf_token %}
+        <input type="text" name="matiere" id="input-matiere" placeholder="Matière (ex: Analyse)" autocomplete="off">
+        <input type="text" name="annee" id="input-annee" placeholder="Année (ex: 2013-2014)" autocomplete="off">
+
+        <button style="color:white; font-style:bold;" type="submit" class="btn btn-primary" id="btn-rechercher">Rechercher</button>
+    </form></div><hr>
+    {% if sujets %}
+        <ul>
+            {% for sujet in sujets %}
+                <li class="sujets" data-matiere="{{sujet.matiere}}" data-annee="{{sujet.annee}}"  style="display:block;margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p>Matière : {{ sujet.matiere }}</p>
+                            <p>Épreuve : {{ sujet.titre }}</p>
+                            <p>Année : {{ sujet.annee }}</p>
+                            <div style="display:inline;">
+                                <a style="margin-right:15px" href="{% url 'see_sujet' sujet.id %}">Ouvrir</a>
+                                <a href="{% url 'download' sujet.id %}">Télécharger</a>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <a style="margin-right:15px" href="{% url 'poster_corrige' sujet.id  %}">Proposer une correction</a>
+                            <a href="{% url 'see_correction' sujet.id %}">Voir les propositions de correction</a>
+                        </div>
+                    </div><hr>
+                </li>
+                
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun sujet disponible.</p>
+    {% endif %}
+
+     <script src="{% static 'javascript/recherche.js' %}" defer></script>   <!--L'attribut defer s'assure que le script est exécuté après que le document HTML est analysé et le DOM est construit. -->
+{% endblock %}

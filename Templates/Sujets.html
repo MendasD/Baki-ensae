@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<p>Poster un ancien sujet</p>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <!-- 
+    <input type="text" name="ecole" placeholder="Le nom de l'école" required maxlength="50"><br/>
+    <input type="text" name="classe" placeholder="Entrer la classe" required maxlength="50"><br/>
+    <input type="text" name="semestre" placeholder="Entrer le semestre" required maxlength="50"><br/>
+    <input type="text" name="matiere" placeholder="Entrer la matière" required maxlength="50"><br/>
+    <input type="text" name="titre" placeholder="Titre du document" required maxlength="50"><br/>
+    <input type="text" name="annee" placeholder="Année du sujet" required maxlength="50"><br/>
+    <input type="file" name="doc" placeholder="Année du sujet" accept="image/*, application/pdf, text/plain" ><br/>
+    -->
+    <button type="submit"> Publier </button>
+</form>
+{% endblock %}

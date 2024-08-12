@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block photo %}
+    {% if user.photo %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user.email }}</span>
+{% endblock %}
+
+{% block content %}
+
+    <style>
+
+        #bibliotheque{
+            color: bisque;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <h2>Bienvenue sur la partie Bibliothèque</h2>
+    <p> Cette bibliothèque comporte exactement {{nombre}} document{{nombre|pluralize}} publié{{nombre|pluralize}} par différents étudiants.</p>
+    <p>Dans cette section, vous pouvez consulter les sujets, les télécharger, et biensûr  poster d'autres documents qui pourraient éventuellement aider d'autres étudiants.</p>
+    <div style="display:inline;">
+        <div style="text-align:left;">
+             <a href="{% url 'creer_document' %}"  type="submit" class="button btn btn-primary" >Ajouter un document</a>
+        </div>
+        <div style="text-align:right;">
+        <form id="search-form" method="post" >
+            {% csrf_token %}
+            <input type="text" name="matiere" id="input-matiere" placeholder="Matière (ex: Analyse)" autocomplete="off">
+            <input type="text" name="auteur" id="input-auteur" placeholder="Auteur (ex: Mendas)" autocomplete="off">
+            <input type="text" name="classe" id="input-classe" placeholder="Classe (ex: AS1)" autocomplete="off">
+
+            <button style="color:white; font-style:bold;" type="submit" class="btn btn-primary" id="btn-rechercher">Rechercher</button>
+        </form></div>
+    </div><hr>
+    {% if documents %}
+        <ul>
+            {% for doc in documents %}
+                <li class="documents" data-matiere="{{doc.matiere}}" data-auteur="{{doc.auteur}}" data-classe="{{doc.classe}}"  style="display:block;margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p style="font-weight:bold;">Matière : {{ doc.matiere }}</p>
+                            <p>Type : {{ doc.type }}</p>
+                            <p>Classe : {{ doc.classe }}</p>
+                            <p>Posté le : {{ doc.date}}</p>
+                            {% if doc.auteur == user %}
+                                <p>Par : Vous</p>
+                            {% else %}
+                                <p>Par : {{ doc.auteur}}</p>
+                            {% endif %}
+                            <p>Description : {{ doc.description}}</p>
+                            <div style="display:inline;">
+                                <a style="margin-right:15px" href="{% url 'voirdocument' doc.id %}">Ouvrir</a>
+                                <a href="{% url 'downloaddoc' doc.id %}">Télécharger</a>
+                            </div>
+                        </div>
+                    </div><hr>
+                </li>
+                
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun document disponible pour le moment.</p>
+    {% endif %}
+
+     <script src="{% static 'javascript/recherchedoc.js' %}" defer></script>   <!--L'attribut defer s'assure que le script est exécuté après que le document HTML est analysé et le DOM est construit. -->
+{% endblock %}

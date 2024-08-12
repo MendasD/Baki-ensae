@@ -1,0 +1,331 @@
+{% extends "base.html" %}  <!-- on spécifie le template parent/mère -->
+
+{% load static %} <!-- on charge le dossier static -->
+
+{% block photo %}
+    {% if user.photo %}
+        <img src="{{user.photo.url}}" alt="Photo de profil" >
+    {% endif %}
+{% endblock %}
+
+{% block email %}
+    <span>{{ user.email }}</span>
+{% endblock %}
+
+
+{% block content %}
+    <style>
+        body {
+            /*background-image: url("{% static 'images/toutes_ecoles.jpg' %}");*/
+            background-size: cover;
+            background-position: center;
+        }
+
+        #monespace{
+            color: bisque;
+        }
+
+        .banner {
+            background-color: #007BFF; /* #4CAF50 */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        #info-publi {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10%;
+        }
+
+        #informations, #publications, #stats, #recent-activity {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+
+        #informations{
+            display: flex;
+        }
+
+        #partie-photo, #partie-infos{
+            display: inline-block;
+            margin: 5%;
+        }
+
+         button#modifier, button#valider {
+            background-color: #F5DEB3; /* couleur bisque */
+            border: none;
+            color: #333;
+            padding: 5%;
+            text-align: center;
+            display: inline-block;
+            font-size: 100%;
+            margin: 5% 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button#modifier:hover, button#valider:hover {
+            background-color: #E6C2A6;
+        }
+
+        form input {
+            width: 90%;
+            padding: 5%;
+            margin: 2% 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form input:focus {
+            border-color: #F5DEB3; /* Couleur bisque */
+            outline: none;
+        }
+
+        .photo-de-profil {
+            width: 100%;
+            height: auto;
+            border-radius: 10%; /* Forme moins ronde */
+            margin-bottom: 10%;
+            object-fit: cover;
+            max-width: 150px;
+        }
+
+        #dashboard {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .dashboard-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .dashboard-btn:hover {
+            background-color: #0056b3;
+        }
+
+        h3 {
+            display: flex;
+            align-items: center;
+        }
+
+        h3 i {
+            margin-right: 10px;
+        }
+    </style>
+
+    <div class="banner">
+        <h2>Bienvenue, {{ user.username }} !</h2>
+        <p>Heureux de vous revoir. Explorez vos informations et vos contributions.</p>
+    </div>
+
+    <div id="info-publi">
+        <div id="informations">
+            <div id="partie-photo">
+                <h3><i class="fa fa-user-circle"></i> Informations personnelles</h3>
+                {% if user.photo %}
+                    <img class="photo-de-profil" src="{{user.photo.url}}" alt="Photo de profil" >
+                {% else %}
+                    <img class="photo-de-profil" src="{% static 'images/profil.jpg' %}" alt="Photo de profil" >
+                {% endif %}
+            </div>
+            <div id="partie-infos">
+            <p>Nom d'utilisateur: <strong>{{user.username}}</strong></p>
+            <p>Adresse Mail: <strong>{{user.email}}</strong></p>
+            <p>Mot de passe: <strong>{{user.password}}</strong></p>
+            <button id="modifier" type="button">Modifier</button><br><br>
+            <form id="form-modification" style="display: none;">
+                <input id="new-username" type="text" placeholder="Username" required> <br/>
+                <input id="new-email" type="email" placeholder="E-mail" required> <br/>
+                <input id="new-password" type="password" placeholder="New password" required> <br/>
+                <input id="confirm-password" type="password" placeholder="Confirm password" required> <br/>
+                <input id="new-photo" type="file" name="photo" accept="image/*"  id="id_photo"><br/>
+
+                <button id="valider" type="submit">Valider</button>
+            </form>
+            </div>
+        </div>
+
+        <div id="publications">
+            <h3><i class="fa fa-book"></i> Vos publications</h3>
+            <p>Bienvenue sur ton espace personnel. Ici, tu as la possibilité de modifier tes informations, et également de voir le nombre de publications que tu as déjà faites.</p>
+            <h5>En effet, tu as déjà posté <strong>{{nombre_corriges}}</strong> corrigé{{nombre_corriges|pluralize}} et <strong>{{nombre_doc}}</strong> document{{nombre_doc|pluralize}} dans la bibliothèque.</h5>
+            <p>Nous te remercions d'utiliser notre plateforme et nous t'encourageons vivement à contribuer à son amélioration en postant davantage de corrigés et de documents dans la <a href="{% url 'bibliotheque' %}">bibliothèque</a>. N'oublie pas de participer dans <a href="{% url 'home' %}">le forum.</a></p>
+        </div>
+
+        <div id="stats">
+            <h3><i class="fa fa-chart-bar"></i> Statistiques de votre compte</h3>
+            <p>Contribution dans le forum : <strong>{{ p_message }}</strong> %</p>
+            <p>Contribution dans la bibliothèque : <strong>{{ p_doc }}</strong> %</p>
+            <p>Contribution dans les corrigés : <strong>{{ p_corrige }}</strong> %</p>
+        </div>
+
+        <div id="recent-activity">
+            <h3><i class="fa fa-clock"></i> Activités récentes</h3>
+            <ul>
+                <li>Publication d'un document : {{documents.0.fichier}} - {{ documents.0.date|date:"Y-m-d" }}</li>
+                <li>Publication des corrigés : {{corriges.0.titre}} - {{ corriges.0.date|date:"Y-m-d" }}</li>
+            </ul>
+        </div>
+
+        <div id="dashboard">
+            <a href="{% url 'mon_espace' %}" class="dashboard-btn">Modifier le profil</a>
+            <button type="button" class="dashboard-btn" id="voir-publications">Voir mes publications</button>
+            <a href="{% url 'nous_contacter' %}" class="dashboard-btn">Contacter l'équipe d'EducResa</a>
+        </div>
+    </div>
+
+        <div id="affiche-documents" style="display:none;">
+            <form id="search-form" method="post" >
+                {% csrf_token %}
+                <input type="text" name="matiere" id="input-matiere" placeholder="Matière (ex: Analyse)" autocomplete="off" style="display:none;">
+                <input type="text" name="auteur" id="input-auteur" placeholder="Auteur (ex: Mendas)" autocomplete="off" style="display:none;">
+                <input type="text" name="classe" id="input-classe" placeholder="Classe (ex: AS1)" autocomplete="off" style="display:none;">
+
+                <button style="color:white; font-style:bold; display:none;" type="submit" class="btn btn-primary" id="btn-rechercher">Rechercher</button>
+            </form><hr>
+            {% if documents %}
+                <ul>
+                    {% for doc in documents %}
+                        <li class="documents" data-matiere="{{doc.matiere}}" data-auteur="{{doc.auteur}}" data-classe="{{doc.classe}}"  style="display:block;margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight:bold;">Matière : {{ doc.matiere }}</p>
+                                    <p>Type : {{ doc.type }}</p>
+                                    <p>Classe : {{ doc.classe }}</p>
+                                    <p>Posté le : {{ doc.date}}</p>
+                                    {% if doc.auteur == user %}
+                                        <p>Par : Vous</p>
+                                    {% else %}
+                                        <p>Par : {{ doc.auteur}}</p>
+                                    {% endif %}
+                                    <p>Description : {{ doc.description}}</p>
+                                    <div style="display:inline;">
+                                        <a style="margin-right:15px" href="{% url 'voirdocument' doc.id %}">Ouvrir</a>
+                                        <a href="{% url 'downloaddoc' doc.id %}">Télécharger</a>
+                                    </div>
+                                </div>
+                            </div><hr>
+                        </li>
+                        
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun document publié pour le moment.</p>
+            {% endif %}
+        </div>
+
+    <script src="{% static 'javascript/recherchedoc.js' %}" defer></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(e) {
+            e.preventDefault();
+           var btn_modifier = document.querySelector("#modifier");
+           btn_modifier.addEventListener("click", function(){
+                var formulaire = document.getElementById("form-modification");
+                document.querySelector("#new-username").value = `{{user.username}}`;
+                document.querySelector("#new-email").value = `{{user.email}}`;
+                document.querySelector("#new-password").value = `{{user.password}}`;
+                formulaire.style.display = "block";
+                btn_modifier.style.display = "None";
+           });
+
+           var btn_valider = document.querySelector("#valider");
+           btn_valider.addEventListener("click", function(e){
+                e.preventDefault();
+                
+                var username = document.querySelector("#new-username").value;
+                var password = document.querySelector("#new-password").value;
+                var email = document.querySelector("#new-email").value;
+                var confirm_password = document.querySelector("#confirm-password").value;
+                var photo1 = document.querySelector("#new-photo").value;
+
+
+                if(username && password && email){
+                    if(password == confirm_password){
+
+                        // Récupération des données du formulaire
+                        var formData = new FormData();
+                        formData.append('username', $('#new-username').val());
+                        formData.append('email', $('#new-email').val());
+                        formData.append('password', $('#new-password').val());
+                        
+                        // Récupérer le fichier photo s'il est sélectionné
+                        var photo = $('#new-photo')[0].files[0];
+                        if (photo) {
+                            formData.append('photo', photo);
+                            console.log("photo");
+                        }
+                        const data={
+                            username: username,
+                            email: email,
+                            photo: photo1
+                        }
+                        $.ajax({
+                            url: '{% url "modifier_user" %}',
+                            type: "POST",
+                            data: formData,
+                            processData: false,  // Ne pas transformer les données en chaîne de caractères
+                            contentType: false,  // Ne pas fixer de type de contenu pour permettre l'envoi de fichiers
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            },
+                            success: function(response) {
+                                alert('Modifications enregistrées avec succès!');
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Erreur:', xhr.responseJSON ? xhr.responseJSON.error : error);
+                                alert('Erreur lors de la modification de vos informationss.');
+                            }
+                        });
+
+                        console.log("ok");
+
+                        document.getElementById("form-modification").style.display = "None";
+                        document.querySelector("#modifier").style.display = "block";
+
+
+                    }else{
+                        alert("Les mots de passe ne correspondent pas !!!");
+                    }
+                }else{
+                    alert("Veuillez remplir tous les champs du formulaire !!!");
+                }
+           });
+
+           var voir_publications = document.querySelector('#voir-publications');
+           voir_publications.addEventListener("click", function(e){
+                e.preventDefault();
+
+                var afficher_publications = document.getElementById("affiche-documents");
+
+                if(afficher_publications.style.display=="none"){
+                    afficher_publications.style.display="block";
+                    document.querySelector('#voir-publications').textContent = "Cacher mes publications";
+                }else{
+                    afficher_publications.style.display="none";
+                    document.querySelector('#voir-publications').textContent = "Voir mes publications";
+                }
+           })
+        })
+
+    </script>
+{% endblock %}

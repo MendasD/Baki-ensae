@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Se connecter{% endblock %}</title>
+
+    <style>
+
+        #body {
+            background-color: lightblue; /* #f2f2f2 : gris */
+            padding: 20px;
+            text-align: center;
+        }
+
+        #se-connecter {
+            display: block;
+            margin-top: 100px;
+            border: 1px solid blue;
+            margin-bottom: 100px;
+            padding: 20px;
+            background: rgba(0, 0, 139, 0.3); /* Bleu clair avec transparence */
+            backdrop-filter: blur(5px); /* Effet de flou */
+            z-index: 1;
+            margin-left: 25%;
+            margin-right: 25%;
+            width: 50%;
+            height: 75%;
+            align-items: center;
+        }
+
+        #titre-connecter {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #form-connecter {
+            display: block;
+            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #inscription {
+            display: block;
+            margin-top: 20px;
+        }
+
+        #message {
+            color: red;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .libelle {
+            margin-right: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: black;
+            display:none;
+
+        }
+
+        #btn-form {
+            margin-top: 20px;
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: 1px solid lightblue;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .input-item{
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid lightgray;
+            width: 100%;
+            height: 30%;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+
+<body id="body">
+
+
+<div id="se-connecter" style="display:block;">
+
+<div id="titre-connecter" style="display:block;">
+    <h1 style="color:blue;"> Se connecter à EducResa</h1> 
+</div>
+
+<div id="form-connecter" style="display:block;">
+    <form id="form" method='post' action= "{% url 'login' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+    <!-- {{ form.as_p }}  "as_p" pour afficher les elts du formulaire par paragraphe -->
+
+        <label class="libelle" for="id_username">Username:</label>
+        <input class="input-item" type="text" name="username"  maxlength="50" required id="id_username" placeholder="Username" autocomplete="off"><br/>
+    
+        <label class="libelle" for="id_email">Email:</label>
+        <input class="input-item" type="email" name="email"  maxlength="254" required id="id_email" placeholder="Email" autocomplete="off"><br/>
+    
+        <label class="libelle" for="id_password">Password:</label>
+        <input class="input-item" type="password" name="password" maxlength="250" required id="id_password" placeholder="Password" autocomplete="off"><br/>
+        
+        <button id="btn-form"  type="submit" name="connecter"> Valider </button>
+    </form>
+</div>
+
+<div id="inscription" style="display:block;">
+    <a href= "{% url 'signup' %}"> Creer un compte ! </a>
+</div>
+
+<div id="message" style="display:block;">
+    {% if error_message %}
+        <p style="color:red;"> {{ error_message}} </p>
+    {% endif %}
+   
+</div>
+
+</div>
+
+</body>
