@@ -110,7 +110,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [("127.0.0.1", 6379)],  # S'assurez que Redis soit en cours d'exécution sur ce port
+            "hosts": [("127.0.0.1", 6379)],  # S'assurer que Redis est en cours d'exécution sur ce port
         },
     },
 }
