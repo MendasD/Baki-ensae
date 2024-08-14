@@ -1,0 +1,2 @@
+web: daphne -p 8000 EducResa.asgi:application
+
