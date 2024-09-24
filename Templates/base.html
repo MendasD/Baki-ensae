@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,10 +28,13 @@
     <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
 
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- pour appliquer un style css à notre application -->
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">  <!-- pour appliquer un style css à notre application -->
     <link rel="stylesheet" href="{% static 'css/nav_sidebar.css' %}"> 
+     
 
    <style>
+        
+
         .counter {
             font-size: 2em;
             color: #007bff;
@@ -187,7 +190,7 @@
             <div class="profil" style="display:inline;">
                 <div class="photo">
                     {% block photo %}   
-                        <h1 class="m-0" style="color: bisque;"><img src=""></h1>
+                        
                     {% endblock %}
                     <div class="profile-info">
                         {% block email %}

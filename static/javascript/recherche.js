@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     searchForm.addEventListener("submit", function(event) {
         event.preventDefault(); // Empêche l'envoi du formulaire par défaut
 
-        var matiereValue = document.getElementById("input-matiere").value.trim().toLowerCase();
+        var matiereValue = document.getElementById("input-matiere").value.trim().toLowerCase();// la methode trim supprime les blancs en debut et fin de chaine
         var anneeValue = document.getElementById("input-annee").value.trim();
 
         allSujets.forEach(function(sujet) {

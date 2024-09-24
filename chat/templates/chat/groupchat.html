@@ -16,10 +16,6 @@
 
 <style>
 
-    #messagerie{
-            color: bisque;
-        }
-
     #chat-message-submit {
             background-color: green;
             border-radius: 20%;
@@ -27,38 +23,26 @@
             font-weight: bold;
         }
 
-        #messageries {
-            display: none; /* display: flex */
-            margin-bottom: 10%;
-        }
+    #espace {
+        border: 1px solid;
+        margin: 0 auto 5% auto;
+        /* margin-bottom: 5%; */
+        width: 90%;
+        height: 80%;
+        background-color: lightgray;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+    }
 
-        #message, #membres {
-            /* display: inline-block; */ 
-            display: none;
-            vertical-align: top;
-            margin-right: 20px;
-        }
-
-        #espace {
-            border: 1px solid;
-            margin: 0 auto 5% auto;
-            /* margin-bottom: 5%; */
-            width: 90%;
-            height: 80%;
-            background-color: lightgray;
-            display: flex;
-            flex-direction: column;
-            /* align-items: center; */
-        }
-
-        #zone-saisie{
-            margin-left: 2%;
-        }
+    #zone-saisie{
+        margin-left: 2%;
+    }
 
 </style>
 
 <!-- le containeur "espace" est là pour contenir les messages du groupe -->
-<div id="espace">
+<div id="espace" class="container ">
 
 </div>
 
@@ -67,23 +51,6 @@
     <input id="chat-message-submit" type="button" value="Send">
 </div>
 
-<!-- le containeur "messageries" était d'abord utilisé pour l'affichage des messages -->
-<div id="messageries">
-    <div id="message">
-        <textarea id="chat-log" cols="100" rows="20"  readonly></textarea><br>
-        <input id="chat-message-input" type="text" placeholder="Entrer un message" size="70%">
-        <input id="chat-message-submit" type="button" value="Send">
-    </div>
-
-    <div id="membres" >
-        <h3>Membres du groupe</h3>
-        <ul id="members">
-            {% for member in group_members%}
-                <li id="members-{{member.username}}">{{member}}</li>
-            {%endfor%}
-        </ul>
-    </div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -102,9 +69,8 @@
     initialDate.textContent = lastDate;
     text_box.appendChild(initialDate);
 
+    // On parcours les messages et évènements (join or leave) envoyés depuis la view
     {% for message_event in message_and_event_list %}
-        // Ajoute le message à la zone de texte
-        //document.querySelector('#chat-log').value += `{{ message_event|safe }}\n`; // Le filtre safe indique à Django que message_event ne doit pas être échappé
 
         var messageDate = "{{ message_event.timestamp|date:'Y-m-d' }}";
 
@@ -119,12 +85,15 @@
         }
 
         var newDiv = document.createElement('div');
+       
         newDiv.style.display = "block";
-        newDiv.style.border = "1px solid blue";
-        newDiv.style.borderRadius = "1%";
+        newDiv.style.border = "1px solid lightgray";   
+        newDiv.style.padding = "10px"; 
+        newDiv.style.borderRadius = "7%";
         newDiv.style.marginBottom = "3%";  // Ajouter un espace entre les messages
         newDiv.style.backgroundColor = "white";
-        newDiv.style.width = "40%";
+        newDiv.style.maxWidth = "55%";
+        newDiv.style.minWidth = "30%";
         newDiv.style.wordWrap = "break-word"; /* Permet de passer à la ligne si le mot est trop long */
         newDiv.style.overflowWrap = "break-word"; /* Compatibilité avec certains navigateurs plus anciens */
         newDiv.style.whiteSpace = "normal"; /* Permet au texte de passer à la ligne */
@@ -142,18 +111,30 @@
             var newContent = document.createElement('p');
             newContent.textContent = "{{ message_event.content }}";
 
-            var newhour = document.createElement('p');
+            // Créer un conteneur Flex pour ajuster le placement de l'heure
+            var timeContainer = document.createElement('div');
+            timeContainer.style.display = "flex";
+            timeContainer.style.justifyContent = "space-between";
+            timeContainer.className = "float-end";
+            
+            var newhour = document.createElement('span');
             newhour.style.color = "black";
-            newhour.style.marginLeft = "75%";
+            //newhour.style.marginLeft = "75%";
+            newhour.style.fontSize = "1em";
+            //newhour.style.bottom = "5px";
+            //newhour.style.right = "10px";
             newhour.textContent = "{{ message_event.timestamp.time }}"
-
+            
             {% if message_event.author.username == user.username %}
                 newDiv.style.backgroundColor = "#007bff";
                 newContent.style.color = "white";
-                newDiv.style.marginLeft = "55%";
+                //newDiv.style.marginLeft = "55%";
+                newDiv.style.marginLeft = "auto";
+                newDiv.style.marginRight = "2%"
                 newHeader.style.display = "none";
             {% else %}
                 newDiv.style.marginLeft = "2%";
+                newDiv.style.marginRight = "auto";
             {% endif %}
 
             newDiv.appendChild(newHeader);
@@ -164,7 +145,8 @@
                 var reponseDiv = document.createElement('div');
                 reponseDiv.style.display = "block";
                 reponseDiv.style.border = "1px solid green";
-                reponseDiv.style.borderRadius = "1%";
+                reponseDiv.style.padding = "10px";
+                reponseDiv.style.borderRadius = "3%";
                 reponseDiv.style.marginTop = "3%";
                 reponseDiv.style.backgroundColor = "lightgray";
                 reponseDiv.style.padding = "1%";
@@ -185,16 +167,22 @@
             {% endif %}
             
             newDiv.appendChild(newContent);
-           
+            timeContainer.appendChild(newhour);  // Ajout de l'heure dans le conteneur
+            newDiv.appendChild(timeContainer);
+
             var replyButton = document.createElement('button');
             replyButton.type = "button";
             replyButton.className = "repondre";
+            replyButton.classList.add('col-md-2')
             replyButton.style.display = "inline";
             replyButton.style.padding = "1%";
             replyButton.style.margin = "1%";
+            replyButton.style.minWidth = "30%";
+            replyButton.style.maxWidth = "40%";
             replyButton.style.backgroundColor = "green";
             replyButton.style.color = "white";
             replyButton.value = "repondre";
+            replyButton.style.fontSize = "14px";
             replyButton.id = "replyButton-{{message_event.id}}"; // ID unique
             replyButton.textContent = "Répondre";
             replyButton.dataset.messageId = "{{ message_event.id }}"; // Stocke l'ID du message
@@ -204,12 +192,16 @@
             var deleteButton = document.createElement('button');
             deleteButton.type = "button";
             deleteButton.className = "delete";
+            deleteButton.classList.add('col-md-2')
             deleteButton.style.display = "none";
             deleteButton.style.padding = "1%";
             deleteButton.style.margin = "1%";
+            deleteButton.style.minWidth = "30%";
+            deleteButton.style.maxWidth = "40%";
             deleteButton.style.backgroundColor = "red";
             deleteButton.style.color = "white";
             deleteButton.value = "supprimer";
+            deleteButton.style.fontSize = "14px";
             deleteButton.id = "deleteButton-{{ message_event.id }}"; // ID unique
             deleteButton.textContent = "Supprimer";
             deleteButton.dataset.messageId = "{{ message_event.id }}"; // Stocke l'ID du message
@@ -220,7 +212,8 @@
                 deleteButton.style.display = "inline";
             {% endif %}
 
-            newDiv.appendChild(newhour);
+            //newDiv.appendChild(newhour);
+            
 
             text_box.appendChild(newDiv);
 
@@ -248,6 +241,9 @@
                 var messageId = this.dataset.messageId; // Récupère l'ID du message
                 var messageAuthor = this.dataset.messageAuthor;
 
+                // On désactive le boutton 'repondre'
+                this.disabled = true;
+
                 var replyDiv = document.createElement('div');
                 replyDiv.style.display = "block";
                 replyDiv.style.border = "1px solid green";
@@ -271,9 +267,20 @@
                 var sendReplyButton = document.createElement('button');
                 sendReplyButton.type = "button";
                 sendReplyButton.style.marginTop = "1%";
+                sendReplyButton.style.marginRight = "3%";
+                sendReplyButton.style.marginLeft = "2%";
                 sendReplyButton.style.backgroundColor = "#007bff";
                 sendReplyButton.style.color = "white";
                 sendReplyButton.textContent = "Envoyer";
+
+                var cancelReplyButton = document.createElement('button');
+                cancelReplyButton.type = "button";
+                cancelReplyButton.style.marginTop = "1%";
+                cancelReplyButton.style.marginRight = "2%";
+                cancelReplyButton.style.marginLeft = "auto";
+                cancelReplyButton.style.backgroundColor = "gray";
+                cancelReplyButton.style.color = "white";
+                cancelReplyButton.textContent = "Annuler";
 
                 sendReplyButton.addEventListener("click", function() {
                     var replyContent = replyTextArea.value;
@@ -286,15 +293,31 @@
                             'message': replyContent
                         }));
 
+                       // On reactive le boutton 'repondre'. On remonte au niveau du containeur parent au container parent du bouton 'Annuler' pour chercher l'elt de classe 'repondre'
+                        const repondreButton = this.parentNode.parentNode.querySelector('.repondre');
+                        if (repondreButton) {
+                            repondreButton.disabled = false;  // Réactiver le bouton 'repondre' spécifique
+                        }
+                        
                         replyDiv.remove();
                     } else {
                         alert("La réponse ne peut pas être vide.");
                     }
                 });
 
+                cancelReplyButton.addEventListener('click',function(){
+                    // On reactive le boutton 'repondre'. On remonte au niveau du containeur parent au container parent du bouton 'Annuler' pour chercher l'elt de classe 'repondre'
+                    const repondreButton = this.parentNode.parentNode.querySelector('.repondre');
+                    if (repondreButton) {
+                        repondreButton.disabled = false;  // Réactiver le bouton 'repondre' spécifique
+                    }
+                    replyDiv.remove();
+                })
+
                 replyDiv.appendChild(replyHeader);
                 replyDiv.appendChild(replyTextArea);
                 replyDiv.appendChild(sendReplyButton);
+                replyDiv.appendChild(cancelReplyButton);
                 this.parentNode.appendChild(replyDiv); // Ajouter le div de réponse sous le bouton
             });
         });
@@ -378,13 +401,16 @@
         //document.querySelector('#chat-log').value += `${data.message}\n`;
         var text_box = document.getElementById('espace');
 
+        // bloc pour le message
         var newDiv = document.createElement('div');
         newDiv.style.display = "block";
-        newDiv.style.border = "1px solid blue";
-        newDiv.style.borderRadius = "1%";
+        newDiv.style.border = "1px solid lightgray";   // Couleur douce
+        newDiv.style.padding = "10px";
+        newDiv.style.borderRadius = "7%";
         newDiv.style.marginBottom = "3%";  // Ajouter un espace entre les messages
         newDiv.style.backgroundColor = "white";
-        newDiv.style.width = "40%";
+        newDiv.style.maxWidth = "55%";
+        newDiv.style.minWidth = "30%";
         newDiv.style.wordWrap = "break-word"; /* Permet de passer à la ligne si le mot est trop long */
         newDiv.style.overflowWrap = "break-word"; /* Compatibilité avec certains navigateurs plus anciens */
         newDiv.style.whiteSpace = "normal"; /* Permet au texte de passer à la ligne */
@@ -406,13 +432,16 @@
 
                 console.log(data.author);
 
+                // Si l'utilisateur connecté est l'auteur du message
                 if (data.author == "{{ user.username }}") {
                     newDiv.style.backgroundColor = "#007bff";
                     newContent.style.color = "white";
-                    newDiv.style.marginLeft = "55%";
+                    newDiv.style.marginLeft = "auto";
+                    newDiv.style.marginRight = "2%";
                     newHeader.style.display = "none";
                 } else {
                     newDiv.style.marginLeft = "2%";
+                    newDiv.style.marginRight = "auto"
                 }
 
                 newDiv.appendChild(newHeader);
@@ -489,6 +518,8 @@
             // Ajouter des gestionnaires d'événements pour les boutons
             document.getElementById(`replyButton-${nbmsg}`).addEventListener("click", function() {
                 
+                this.disabled = true;
+
                 var replyDiv = document.createElement('div');
                 replyDiv.style.display = "block";
                 replyDiv.style.border = "1px solid green";
@@ -512,14 +543,26 @@
                 var sendReplyButton = document.createElement('button');
                 sendReplyButton.type = "button";
                 sendReplyButton.style.marginTop = "1%";
+                sendReplyButton.style.marginRight = "5%";
+                sendReplyButton.style.marginLeft = "2%";
                 sendReplyButton.style.backgroundColor = "#007bff";
                 sendReplyButton.style.color = "white";
                 sendReplyButton.textContent = "Envoyer";
 
+                var cancelReplyButton = document.createElement('button');
+                cancelReplyButton.type = "button";
+                cancelReplyButton.style.marginTop = "1%";
+                cancelReplyButton.style.marginRight = "2%";
+                cancelReplyButton.style.marginLeft = "auto";
+                cancelReplyButton.style.backgroundColor = "gray";
+                cancelReplyButton.style.color = "white";
+                cancelReplyButton.textContent = "Annuler";
+
+                // Evènement sur le boutton 'send'
                 sendReplyButton.addEventListener("click", function() {
                     var replyContent = replyTextArea.value;
                     if (replyContent) {
-                        // Envoyer la réponse au serveur
+                        // Envoyer la réponse au serveur (ce qui est traité dans le fichier consumer.py)
                         chatSocket.send(JSON.stringify({
                             //type: "reply_message",
                             'type': "text_message",
@@ -528,6 +571,12 @@
                             'author': "{{request.user.username}}",
                             'message': replyContent
                         }));
+
+                        // On reactive le boutton 'repondre'. On remonte au niveau du containeur parent au container parent du bouton 'Annuler' pour chercher l'elt de classe 'repondre'
+                        const repondreButton = this.parentNode.parentNode.querySelector('.repondre');
+                        if (repondreButton) {
+                            repondreButton.disabled = false;  // Réactiver le bouton 'repondre' spécifique
+                        }
                     
                         // Retirer la zone de texte de réponse après l'envoi
                         replyDiv.remove();
@@ -538,11 +587,24 @@
                     }
                 });
 
+                // Evènement sur le boutton 'Annuler' du bloc de réponse
+                cancelReplyButton.addEventListener('click',function(){
+
+                    // On reactive le boutton 'repondre'. On remonte au niveau du containeur parent au container parent du bouton 'Annuler' pour chercher l'elt de classe 'repondre'
+                    const repondreButton = this.parentNode.parentNode.querySelector('.repondre');
+                    if (repondreButton) {
+                        repondreButton.disabled = false;  // Réactiver le bouton 'repondre' spécifique
+                    }
+                    replyDiv.remove();
+                });
+
             
                 replyDiv.appendChild(replyHeader);
                 replyDiv.appendChild(replyTextArea);
                 replyDiv.appendChild(sendReplyButton);
+                replyDiv.appendChild(cancelReplyButton);
                 newDiv.appendChild(replyDiv);
+                
                 
             
             });
@@ -573,6 +635,7 @@
             });
                 
         }else{
+            // Si c'est plutôt un évènement (join or leave) que le chatsocket reçoit
             var newContent = document.createElement('p');
             newContent.textContent = data.message;
             newContent.style.marginLeft = "35%";
@@ -586,7 +649,6 @@
         user = data.user
         
         if (status == "Left"){
-        
             document.getElementById(`members-${user}`).remove()
         }else if(status == "Join"){
             var members_list = document.getElementById('members')

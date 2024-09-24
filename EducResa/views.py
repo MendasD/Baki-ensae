@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth import login
 
 
 
@@ -21,7 +22,7 @@ def Home(request) :
 
 def Index(request) :
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
-    nbre_user = 150 + Utilisateur.objects.count() #compter le nombre d'utilisateurs
+    nbre_user = Utilisateur.objects.count() #compter le nombre d'utilisateurs
     return render(request, 'index.html', {'user': user,'user_email': user.email,'nombre_user': nbre_user})
 
 def Sujet(request) :
@@ -631,6 +632,8 @@ def ModifierUser(request):
                     user.user.save()
 
                 user.save()  # Sauvegarder les changements dans le modèle Utilisateur
+                login(request, user.user)
+                request.session['user_id'] = user.id
                 
                 return JsonResponse({'status': 'success'})
             except Utilisateur.DoesNotExist:

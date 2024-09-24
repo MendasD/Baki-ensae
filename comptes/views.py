@@ -28,8 +28,8 @@ def LoginView(request):
                 if user.password == password and user.email == email:
                     login(request, user.user)#On se connecte avec le user du modele User de Django
                     request.session['user_id'] = user.id #pour creer une session pour l'utilisateur et conserver ses données. On pourra recuperer ces données par la suite et les utiliser
-                    nbre_user = 150 + Utilisateur.objects.count() #compter le nombre d'utilisateurs
-                    return render(request,'index.html',{'user_id': user.id,'user_name': user.username, 'user_email': user.email,'user_photo': user.photo,'nombre_user': nbre_user})
+                    nbre_user = Utilisateur.objects.count() #compter le nombre d'utilisateurs
+                    return render(request,'index.html',{'user_id': user.id,'user_name': user.username, 'user_email': user.email,'user_photo': user.photo,'nombre_user': nbre_user,'user':user})
                 elif user.email != email:
                     error = "Adresse mail incorrect"
                     return render(request, 'login.html', {'error_message':error})

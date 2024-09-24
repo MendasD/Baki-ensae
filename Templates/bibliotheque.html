@@ -21,6 +21,11 @@
             color: bisque;
         }
 
+        body{
+            background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
+            font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+        }
+
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -43,6 +48,7 @@
     <h2>Bienvenue sur la partie Bibliothèque</h2>
     <p> Cette bibliothèque comporte exactement {{nombre}} document{{nombre|pluralize}} publié{{nombre|pluralize}} par différents étudiants.</p>
     <p>Dans cette section, vous pouvez consulter les sujets, les télécharger, et biensûr  poster d'autres documents qui pourraient éventuellement aider d'autres étudiants.</p>
+    <p>Vous pouvez également poster les mémoires en mettant comme matière "memoire", afin de faciliter la recherche des anciens mémoires</p>
     <div style="display:inline;">
         <div style="text-align:left;">
              <a href="{% url 'creer_document' %}"  type="submit" class="button btn btn-primary" >Ajouter un document</a>

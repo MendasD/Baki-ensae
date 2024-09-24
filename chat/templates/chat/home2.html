@@ -74,7 +74,7 @@
         group_uuid = group[1]
         action = group[0] // Will either be leave_group or Join_group or open_group
         if(action == "open_group"){
-            window.location.replace( `http://${base_url}/Messagerie/groups/${group_uuid}`)
+            window.location.replace( `http://${base_url}/Messagerie/groups/${group_uuid}`) // url définie dans le fichier urls.py
             }
         else{
         data = {    

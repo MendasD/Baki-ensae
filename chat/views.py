@@ -8,7 +8,7 @@ import json
 
 @login_required
 def HomeView(request):
-   '''The homepage where all groups are listed'''
+   '''The homepage where all groups are listed '''
    groups = Group.objects.all()
    user = request.user
    context = {
@@ -26,7 +26,8 @@ def GroupChatView(request, uuid):
        return HttpResponseForbidden("Vous n'êtes pas un membre de ce groupe.\
                                        Vous pouvez le joindre en utilisant le bouton join")
   
-   messages = group.message_set.all()
+   messages = group.message_set.filter(visible=True)
+   
    '''
    messages are the message the members
    of a group send to the group
@@ -65,7 +66,9 @@ def supprimer_message(request):
             message_id = data.get('message_id',"")
             try:
                 message = Message.objects.get(id=message_id)
-                message.delete()
+                message.visible = False
+                message.save()
+                #message.delete()
                 return JsonResponse({'status': 'success'})
             except Message.DoesNotExist:
                 return JsonResponse({'status': 'error', 'message': 'Message not found'}, status=404)

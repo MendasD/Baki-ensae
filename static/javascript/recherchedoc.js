@@ -9,14 +9,14 @@ document.addEventListener("DOMContentLoaded", function() {
         event.preventDefault(); // Empêche l'envoi du formulaire par défaut
 
         var matiereValue = document.getElementById("input-matiere").value.trim().toLowerCase();
-        var classeValue = document.getElementById("input-classe").value.trim();
-        var auteurValue = document.getElementById("input-auteur").value.trim();
+        var classeValue = document.getElementById("input-classe").value.trim().toLowerCase();
+        var auteurValue = document.getElementById("input-auteur").value.trim().toLowerCase();
 
         allSujets.forEach(function(sujet) {
             sujet.style.display = "none"; // Masque tous les documents au début de chaque recherche
         });
 
-        if (matiereValue && anneeValue && auteurValue) {
+        if (matiereValue && classeValue && auteurValue) {
             allSujets.forEach(function(sujet) {
                 var sujetMatiere = sujet.getAttribute("data-matiere").toLowerCase();
                 var sujetClasse = sujet.getAttribute("data-classe").toLowerCase();

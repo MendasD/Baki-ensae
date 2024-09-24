@@ -21,15 +21,17 @@
         font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
     }
 
-     .classes{
-        display: flex;
-        /*justify-content: space-around;*/ /* ça c'est pour laisser l'espace autour, et ça sera un peu comme ci c'est sentré */
+     .classes ul{
+        display: grid;
+        grid-template-columns: 1fr 1fr;  /* creer 2 colonnes égales */
+        gap: 2%;
         flex-wrap: wrap;
         margin-top: 30px;
         font-size: 20px;
         color: white;
         margin-bottom:90px;
-        margin-left: 10%;
+        margin-left: 5%;
+        margin-right: 5%;
     }
 
     .classes li {

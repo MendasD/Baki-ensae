@@ -44,6 +44,7 @@ class Message(models.Model):
     content = models.TextField()
     group = models.ForeignKey(Group ,on_delete=models.CASCADE)
     response = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    visible = models.BooleanField(default=True)
     
     def __str__(self) -> str:
         date = self.timestamp.date()
