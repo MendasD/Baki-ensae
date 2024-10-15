@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'comptes',
     'EducResa',
-    'chat',
+   
 ]
 
 MIDDLEWARE = [
@@ -62,7 +62,6 @@ TEMPLATES = [
         'DIRS': [
             'Templates',
             'comptes/templates/comptes',
-            'chat/templates/chat',
             'Templates/ENSAE',
             'Templates/ISSEA',
             'Templates/ENSEA',

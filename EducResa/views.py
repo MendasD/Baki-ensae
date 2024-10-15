@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 import os
 from comptes.models import Sujets,Utilisateur,Corriges,Documents
-from chat.models import Message
 from .forms import DocumentForm,CorrigesForm, CreateDocumentForm
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -582,13 +581,7 @@ def MonEspace(request):
     documents = Documents.objects.filter(auteur=user).order_by('-date')
     tous_documents = Documents.objects.all()
     tous_corriges = Corriges.objects.all()
-    tous_messages = Message.objects.all()
-    messages = Message.objects.filter(author=user.user).order_by('-timestamp')
-
-    if tous_messages.count() != 0:
-        pourcentage_message = round((messages.count() / tous_messages.count()) * 100, 2)
-    else:
-        pourcentage_message = 0
+    
     if tous_corriges.count() != 0:
         pourcentage_corriges = round((corriges.count() / tous_corriges.count()) * 100, 2)
     else:
@@ -600,7 +593,7 @@ def MonEspace(request):
 
     nbcorriges = corriges.count()
     nbdocuments = documents.count()
-    return render(request, 'monespace.html', {'user': user, 'corriges': corriges, 'documents': documents, 'nombre_corriges': nbcorriges, 'nombre_doc': nbdocuments, 'p_message': pourcentage_message, 'p_doc': pourcentage_document, 'p_corrige': pourcentage_corriges})
+    return render(request, 'monespace.html', {'user': user, 'corriges': corriges, 'documents': documents, 'nombre_corriges': nbcorriges, 'nombre_doc': nbdocuments, 'p_message': '', 'p_doc': pourcentage_document, 'p_corrige': pourcentage_corriges})
 
 @csrf_exempt
 def ModifierUser(request):
