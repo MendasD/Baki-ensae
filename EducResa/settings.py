@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(+26^&*%w%7pe1=_ytp8l^w3ax=ws_l&yzyfiz@$j#t1im-14j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['EducResa.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',# Pour servir les fichiers statiques avec Daphne
+    #'whitenoise.middleware.WhiteNoiseMiddleware',# Pour servir les fichiers statiques avec Daphne
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -105,6 +105,7 @@ WSGI_APPLICATION = 'EducResa.wsgi.application'
 
 ASGI_APPLICATION = 'EducResa.asgi.application'
 
+"""
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -113,6 +114,7 @@ CHANNEL_LAYERS = {
         },
     },
 }
+"""
 
 
 # Database
@@ -176,6 +178,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'C:/Users/SMART/Desktop/Django/EducResa/Edu
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -202,6 +205,7 @@ LOGGING = {
     },
 }
 
+"""
 
 # Configuration des fichiers et des dossiers pour les photos d'utilisateur
 MEDIA_URL = 'documents/'
