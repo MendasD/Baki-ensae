@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(+26^&*%w%7pe1=_ytp8l^w3ax=ws_l&yzyfiz@$j#t1im-14j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','mendas.pythonanywhere.com']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'comptes',
     'EducResa',
-   
+
 ]
 
 MIDDLEWARE = [
@@ -90,7 +90,7 @@ TEMPLATES = [
             'Templates/ISSEA/ISE1',
             'Templates/ISSEA/ISE2',
             'Templates/ISSEA/ISE3',
-            
+
         ],
         'APP_DIRS': True,
         'OPTIONS': {
