@@ -5,7 +5,7 @@
 
 
 {% block photo %}
-    {% if user %}
+    {% if user.photo %}
         <img src="{{user.photo.url}}" alt="Photo de profil" >
     {% endif %}
 {% endblock %}
@@ -15,12 +15,12 @@
 {% endblock %}
 
 {% block content %}
-    
+
     <style>
 
     body{
         background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
-        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif;
     }
 
 
@@ -32,7 +32,7 @@
         font-size: 20px;
         color: white;
         margin-bottom:170px;
-        
+
     }
 
     .semestres li {
@@ -40,9 +40,9 @@
         color: whatsapp.color;
         border: 1px solid lightblue;
         background-color: rgba(46, 101, 115, 1);
-       
-        
-        
+
+
+
         /*font-style: italic;*/
     }
 

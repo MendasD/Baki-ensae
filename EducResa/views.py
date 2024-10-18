@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404,FileResponse,HttpResponseForbidden, JsonResponse
+
+from django.http import HttpResponse,FileResponse,JsonResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 import os
@@ -45,10 +45,10 @@ def Sujet(request) :
             return redirect('Sujets.html')  # pour renenir sur le formulaire
         except Exception as e:
             print(f"Erreur lors de la création du sujet: {e}")
-            
+
     else:
         return render(request, 'Sujets.html')
-    
+
 
 def create_Sujet(request):
     if request.method == 'POST':
@@ -129,7 +129,7 @@ def voir_document(request, id_doc):
         content_type = 'text/plain'
     else:
         content_type = 'application/octet-stream'  # Type par défaut pour les fichiers binaires
-    
+
     response = FileResponse(document.fichier.open(), content_type=content_type)
     response['Content-Disposition'] = 'inline; filename="{}"'.format(document.fichier.name)
     return response
@@ -667,12 +667,12 @@ def MonEspace(request):
     documents = Documents.objects.filter(auteur=user).order_by('-date')
     tous_documents = Documents.objects.all()
     tous_corriges = Corriges.objects.all()
-    
+
     if tous_corriges.count() != 0:
         pourcentage_corriges = round((corriges.count() / tous_corriges.count()) * 100, 2)
     else:
         pourcentage_corriges = 0
-    if tous_documents.count() != 0:  
+    if tous_documents.count() != 0:
         pourcentage_document = round((documents.count() / tous_documents.count()) * 100, 2)
     else:
         pourcentage_document = 0
@@ -685,10 +685,10 @@ def MonEspace(request):
 def ModifierUser(request):
     if request.method == 'POST':
         try:
-            
+
             data = request.POST  # Utilisation de request.POST pour les données textuelles
             photo = request.FILES.get('photo')  # Récupération du fichier photo si présent
-            
+
             username = data.get('username',"")
             email = data.get('email', "")
             password = data.get('password', "")
@@ -713,7 +713,7 @@ def ModifierUser(request):
                 user.save()  # Sauvegarder les changements dans le modèle Utilisateur
                 login(request, user.user)
                 request.session['user_id'] = user.id
-                
+
                 return JsonResponse({'status': 'success'})
             except Utilisateur.DoesNotExist:
                 return JsonResponse({'status': 'error', 'message': 'User not found'}, status=404)
@@ -737,10 +737,10 @@ def NousContacter(request):
         send_mail(
             subject,
             full_message,
-            settings.DEFAULT_FROM_EMAIL,  
-            [settings.CONTACT_EMAIL],  
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.CONTACT_EMAIL],
         )
 
-        return redirect('.')  
+        return redirect('.')
 
     return render(request, 'nouscontacter.html', {'user': user})
