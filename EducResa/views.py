@@ -232,10 +232,20 @@ def Ensaeisep2(request) :
     user = Utilisateur.objects.get(id=user_id)
     return render(request, 'ensaeisep2.html',{'user':user})
 
-def Ensaeise1(request) :
+def Ensaeisep3(request) :
     user_id = request.session.get('user_id')
     user = Utilisateur.objects.get(id=user_id)
-    return render(request, 'ensaeise1.html',{'user':user})
+    return render(request, 'ensaeisep3.html',{'user':user})
+
+def Ensaeise1maths(request) :
+    user_id = request.session.get('user_id')
+    user = Utilisateur.objects.get(id=user_id)
+    return render(request, 'ensaeise1maths.html',{'user':user})
+
+def Ensaeise1eco(request):
+    user_id = request.session.get('user_id')
+    user = Utilisateur.objects.get(id=user_id)
+    return render(request, 'ensaeise1eco.html', {'user':user})
 
 def Ensaeise2(request) :
     user_id = request.session.get('user_id')
@@ -264,10 +274,15 @@ def Enseaas3(request) :
     user = Utilisateur.objects.get(id=user_id)
     return render(request, 'enseaas3.html', {'user':user})
 
-def Enseaise1(request) :
+def Enseaise1maths(request) :
     user_id = request.session.get('user_id')
     user = Utilisateur.objects.get(id=user_id)
-    return render(request, 'enseaise1.html',{'user':user})
+    return render(request, 'enseaise1maths.html',{'user':user})
+
+def Enseaise1eco(request) :
+    user_id = request.session.get('user_id')
+    user = Utilisateur.objects.get(id=user_id)
+    return render(request, 'enseaise1eco.html',{'user':user})
 
 def Enseaise2(request) :
     user_id = request.session.get('user_id')
@@ -306,10 +321,20 @@ def Isseaisel2(request) :
     user = Utilisateur.objects.get(id=user_id)
     return render(request, 'isseaisel2.html',{'user':user})
 
-def Isseaise1(request) :
+def Isseaisel3(request) :
     user_id = request.session.get('user_id')
     user = Utilisateur.objects.get(id=user_id)
-    return render(request, 'isseaise1.html',{'user':user})
+    return render(request, 'isseaisel3.html',{'user':user})
+
+def Isseaise1maths(request) :
+    user_id = request.session.get('user_id')
+    user = Utilisateur.objects.get(id=user_id)
+    return render(request, 'isseaise1maths.html',{'user':user})
+
+def Isseaise1eco(request) :
+    user_id = request.session.get('user_id')
+    user = Utilisateur.objects.get(id=user_id)
+    return render(request, 'isseaise1eco.html',{'user':user})
 
 def Isseaise2(request) :
     user_id = request.session.get('user_id')
@@ -380,16 +405,38 @@ def Ensaeisep2semestre2(request) :
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
     return render(request, 'ensaeisep2semestre2.html',{'sujets':sujets,'user':user})
 
-# ENSAE/ISE1/semestres
-def Ensaeise1semestre1(request) :
-    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISE1', semestre='Semestre 1').order_by('-date_upload')
+# ENSAE/ISEP3/semestres
+def Ensaeisep3semestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISEP3', semestre='Semestre 1').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
-    return render(request, 'ensaeise1semestre1.html', { 'sujets': sujets,'user': user})
+    return render(request, 'ensaeisep3semestre1.html', { 'sujets': sujets,'user': user})
 
-def Ensaeise1semestre2(request) :
-    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISE1', semestre='Semestre 2').order_by('-date_upload')
+def Ensaeisep3semestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISEP2', semestre='Semestre 2').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
-    return render(request, 'ensaeise1semestre2.html',{'sujets':sujets,'user':user})
+    return render(request, 'ensaeisep3semestre2.html',{'sujets':sujets,'user':user})
+
+# ENSAE/ISE1-maths/semestres
+def Ensaeise1mathssemestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISE1_maths', semestre='Semestre 1').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    return render(request, 'ensaeise1mathssemestre1.html', { 'sujets': sujets,'user': user})
+
+def Ensaeise1mathssemestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISE1_maths', semestre='Semestre 2').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    return render(request, 'ensaeise1mathssemestre2.html',{'sujets':sujets,'user':user})
+
+# ENSAE/ISE1-eco/semestres
+def Ensaeise1ecosemestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISE1_eco', semestre='Semestre 1').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    return render(request, 'ensaeise1ecosemestre1.html', { 'sujets': sujets,'user': user})
+
+def Ensaeise1ecosemestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ENSAE', classe='ISE1_eco', semestre='Semestre 2').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    return render(request, 'ensaeise1ecosemestre2.html',{'sujets':sujets,'user':user})
 
 # ENSAE/ISE2/semestres
 def Ensaeise2semestre1(request) :
@@ -450,16 +497,27 @@ def Enseaas3semestre2(request) :
     return render(request, 'enseaas3semestre2.html',{'sujets':sujets,'user':user})
 
 
-# ENSEA/ISE1/semestres
-def Enseaise1semestre1(request) :
-    sujets = Sujets.objects.filter(ecole='ENSEA', classe='ISE1', semestre='Semestre 1').order_by('-date_upload')
+# ENSEA/ISE1-maths/semestres
+def Enseaise1mathssemestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ENSEA', classe='ISE1_maths', semestre='Semestre 1').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
-    return render(request, 'enseaise1semestre1.html', { 'sujets': sujets,'user': user})
+    return render(request, 'enseaise1mathssemestre1.html', { 'sujets': sujets,'user': user})
 
-def Enseaise1semestre2(request) :
-    sujets = Sujets.objects.filter(ecole='ENSEA', classe='ISE1', semestre='Semestre 2').order_by('-date_upload')
+def Enseaise1mathssemestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ENSEA', classe='ISE1_maths', semestre='Semestre 2').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
-    return render(request, 'enseaise1semestre2.html',{'sujets':sujets,'user':user})
+    return render(request, 'enseaise1mathssemestre2.html',{'sujets':sujets,'user':user})
+
+# ENSEA/ISE1-eco/semestres
+def Enseaise1ecosemestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ENSEA', classe='ISE1_eco', semestre='Semestre 1').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    return render(request, 'enseaise1ecosemestre1.html', { 'sujets': sujets,'user': user})
+
+def Enseaise1ecosemestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ENSEA', classe='ISE1_eco', semestre='Semestre 2').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    return render(request, 'enseaise1ecosemestre2.html',{'sujets':sujets,'user':user})
 
 # ENSEA/ISE2/semestres
 def Enseaise2semestre1(request) :
@@ -520,7 +578,7 @@ def Isseaas3semestre2(request) :
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
     return render(request, 'isseaas1semestre2.html',{'sujets':sujets,'user':user})
 
-# issea/ISEP1/semestres
+# issea/ISEL1/semestres
 def Isseaisel1semestre1(request) :
     sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISEL1', semestre='Semestre 1').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
@@ -531,7 +589,7 @@ def Isseaisel1semestre2(request) :
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
     return render(request, 'isseaisel1semestre2.html',{'sujets':sujets,'user':user})
 
-# issea/ISEP2/semestres
+# issea/ISEL2/semestres
 def Isseaisel2semestre1(request) :
     sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISEL2', semestre='Semestre 1').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
@@ -542,16 +600,44 @@ def Isseaisel2semestre2(request) :
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
     return render(request, 'isseaisel2semestre2.html',{'sujets':sujets,'user':user})
 
-# issea/ISE1/semestres
-def Isseaise1semestre1(request) :
-    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISE1', semestre='Semestre 1').order_by('-date_upload')
+# issea/ISEL3/semestres
+def Isseaisel3semestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISEL3', semestre='Semestre 1').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
-    return render(request, 'isseaise1semestre1.html', { 'sujets': sujets,'user': user})
+    texte = "ISSEA ISEL3 Semestre 1"
+    return render(request, 'sujetsemestre.html', { 'sujets': sujets,'user': user,'texte':texte})
 
-def Isseaise1semestre2(request) :
-    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISE1', semestre='Semestre 2').order_by('-date_upload')
+def Isseaisel3semestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISEl3', semestre='Semestre 2').order_by('-date_upload')
     user = Utilisateur.objects.get(id=request.session.get('user_id'))
-    return render(request, 'isseaise1semestre2.html',{'sujets':sujets,'user':user})
+    texte = "ISSEA ISEL3 Semestre 2"
+    return render(request, 'sujetsemestre.html',{'sujets':sujets,'user':user,'texte':texte})
+
+# issea/ISE1-maths/semestres
+def Isseaise1mathssemestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISE1_maths', semestre='Semestre 1').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    texte = "ISSEA ISE1 option Mathématiques Semestre 1"
+    return render(request, 'sujetsemestre.html', { 'sujets': sujets,'user': user,'texte':texte})
+
+def Isseaise1mathssemestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISE1_maths', semestre='Semestre 2').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    texte = "ISSEA ISE1 option Mathématiques Semestre 2"
+    return render(request, 'isseaise1mathssemestre2.html',{'sujets':sujets,'user':user,'texte':texte})
+
+# issea/ISE1-eco/semestres
+def Isseaise1ecosemestre1(request) :
+    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISE1_eco', semestre='Semestre 1').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    texte = "ISSEA ISE1 option Economie Semestre 1"
+    return render(request, 'sujetsemestre.html', { 'sujets': sujets,'user': user,'texte':texte})
+
+def Isseaise1ecosemestre2(request) :
+    sujets = Sujets.objects.filter(ecole='ISSEA', classe='ISE1_eco', semestre='Semestre 2').order_by('-date_upload')
+    user = Utilisateur.objects.get(id=request.session.get('user_id'))
+    texte = "ISSEA ISE1 option Economie Semestre 2"
+    return render(request, 'sujetsemestre.html',{'sujets':sujets,'user':user,'texte':texte})
 
 # issea/ISE2/semestres
 def Isseaise2semestre1(request) :

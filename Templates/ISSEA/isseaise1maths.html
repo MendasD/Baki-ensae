@@ -5,7 +5,7 @@
 
 
 {% block photo %}
-    {% if user.photo %}
+    {% if user %}
         <img src="{{user.photo.url}}" alt="Photo de profil" >
     {% endif %}
 {% endblock %}
@@ -62,13 +62,13 @@
     </style>
 
 
-    <p> Vous avez là les anciens sujets de la classe ISE1 de l'ENSAE de Dakar </p>
+    <p> Vous avez là les anciens sujets de la classe ISE1 option Mathématiques de l'ISSEA de Yaoundé </p>
     <p>Choisir le semestre :</p>
 
 <div class="semestres">
     <ul>
-        <li><a href="{% url 'ensae-ise1-semestre1' %}">Semestre 1</a></li>
-        <li><a href="{% url 'ensae-ise1-semestre2' %}">Semestre 2</a></li>
+        <li><a href="{% url 'issea-ise1maths-semestre1' %}">Semestre 1</a></li>
+        <li><a href="{% url 'issea-ise1maths-semestre2' %}">Semestre 2</a></li>
     </ul>
 
 </div>

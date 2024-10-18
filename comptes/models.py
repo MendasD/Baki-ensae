@@ -21,11 +21,11 @@ class Utilisateur (models.Model) :
 class Sujets(models.Model):
 
     id = models.AutoField(primary_key=True)
-    ecole = models.CharField(max_length=50)
-    classe = models.CharField(max_length=50)
-    semestre = models.CharField(max_length=50)
+    ecole = models.CharField(max_length=50,choices=[('ENSAE', 'ENSAE'), ('ISSEA', 'ISSEA'), ('ENSEA', 'ENSEA')])
+    classe = models.CharField(max_length=50, choices=[('AS1', 'AS1'), ('AS2', 'AS2'), ('AS3', 'AS3'),('ISEP1','ISEP1'),('ISEL1','ISEL1'),('ISEP2','ISEP2'),('ISEL2','ISEL2'),('ISEP3','ISEP3'),('ISEL3','ISEL3'),('ISE1_maths','ISE1_maths'),('ISE1_eco','ISE1_eco'),('ISE2','ISE2'),('ISE3','ISE3')])
+    semestre = models.CharField(max_length=50, choices=[('Semestre 1', 'Semestre 1'), ('Semestre 2', 'Semestre 2')])
     matiere = models.CharField(max_length=50)
-    titre = models.CharField(max_length=50)
+    titre = models.CharField(max_length=50,null=True,blank=True)
     annee = models.CharField(max_length=50)
     date_upload = models.DateField(auto_now_add=True)
     doc = models.FileField(upload_to='Anciens_Sujets/',unique=True, blank=True) # Pour des raisons de telechargement du fichier

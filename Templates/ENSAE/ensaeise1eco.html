@@ -5,7 +5,7 @@
 
 
 {% block photo %}
-    {% if user %}
+    {% if user.photo %}
         <img src="{{user.photo.url}}" alt="Photo de profil" >
     {% endif %}
 {% endblock %}
@@ -62,13 +62,13 @@
     </style>
 
 
-    <p> Vous avez là les anciens sujets de la classe ISE1 de l'ENSEA d'Abidjan </p>
+    <p> Vous avez là les anciens sujets de la classe ISE1 option Economie de l'ENSAE de Dakar </p>
     <p>Choisir le semestre :</p>
 
 <div class="semestres">
     <ul>
-        <li><a href="{% url 'ensea-ise1-semestre1' %}">Semestre 1</a></li>
-        <li><a href="{% url 'ensea-ise1-semestre2' %}">Semestre 2</a></li>
+        <li><a href="{% url 'ensae-ise1eco-semestre1' %}">Semestre 1</a></li>
+        <li><a href="{% url 'ensae-ise1eco-semestre2' %}">Semestre 2</a></li>
     </ul>
 
 </div>
