@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="icon" href="{% static 'images/icone.png' %}" type="image/png">   l'icône de l'application. Ici, notre icone c'est favicon.png -->
-    
+
     <!-- Bootstrap Icons , c'est pour mettre les icônes comme celle du back-to-top -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-    
+
      <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
     <!-- Inclure Owl Carousel CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -27,13 +27,18 @@
     <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
     <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
 
+    <!-- Pour les fa-fa -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">  <!-- pour appliquer un style css à notre application -->
-    <link rel="stylesheet" href="{% static 'css/nav_sidebar.css' %}"> 
-     
+    <link rel="stylesheet" href="{% static 'css/nav_sidebar.css' %}">
+
 
    <style>
-        
+
 
         .counter {
             font-size: 2em;
@@ -71,7 +76,7 @@
             padding: 1%;
             z-index: 1000; /* Pour s'assurer que la barre de navigation est au-dessus d'autres éléments */
             overflow: hidden; /* Empêcher les barres de défilement */
-             
+
         }
 
         .profil img {
@@ -83,17 +88,17 @@
         .photo{
             width: 10%;
             height: 35%;/*longueur occupé par le bloc de l'image; Apres ce bloc, les onglets pourront se placer*/
-            
+
         }
 
         .profil .profile-info {
             margin-left: 2%;
         }
-        
+
         .navbar-nav {
             flex-grow: 1;
             justify-content: flex-end; /* pour l'alignement jusqu'a la fin  */
-            
+
         }
 
         .navbar-nav a {
@@ -101,7 +106,7 @@
         }
 
         .navbar-nav a:hover {
-            color: lightblue; 
+            color: lightblue;
         }
 
         .content {
@@ -139,7 +144,7 @@
                 display: none; /* Masquer le menu par défaut */
                 width: 100%;
                 position: absolute;
-                top: 1%; 
+                top: 1%;
                 left: 0;
                 z-index: 1000; /* Mettre le menu au-dessus des autres éléments */
             }
@@ -161,9 +166,9 @@
                 display: block;
                 width: 100%;
                 text-align: center;
-                padding: 1%; 
+                padding: 1%;
                 box-sizing: border-box; /* Inclure le padding dans la largeur totale */
-                color: white; 
+                color: white;
                 text-decoration: none; /* Supprimer les soulignements des liens */
             }
 
@@ -188,7 +193,7 @@
         }
 
     </style>
-    
+
     <title>{% block title %}EducResa{% endblock %}</title>
 </head>
 <body>
@@ -197,14 +202,20 @@
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
             <div class="profil" style="display:inline;">
                 <div class="photo">
-                    {% block photo %}   
-                        
+                    {% block photo %}
+
                     {% endblock %}
                     <div class="profile-info">
                         <a href="{% url 'mon_espace' %}" >
                         {% block email %}
                             <!-- Add email content here -->
                         {% endblock %}</a>
+
+                        <!-- Boutton de deconnexion -->
+                        <li id="logout" class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i></a>
+                        </li>
+
                     </div>
                 </div>
                 <div class="profile-info">
@@ -224,9 +235,9 @@
                 </div>
             </div>
         </nav>
-        
+
     </div><br>
-    
+
     <div id="content" class="content">
         {% block content %}
 
@@ -239,8 +250,8 @@
             <div class="row justify-content-end">
                 <div class="col-lg-8 col-md-6">
                     <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                        <p style="color:blue;" class="mb-0">&copy; <a class="text-white border-bottom" href="#">Copyright �� 2024 EducResa</a>- Tous droits réservés <br/> 
-						
+                        <p style="color:blue;" class="mb-0">&copy; <a class="text-white border-bottom" href="#">Copyright �� 2024 EducResa</a>- Tous droits réservés <br/>
+
 						Réalisé par <a class="text-white border-bottom" href="{% url 'nous_contacter' %}">Mendas.org(Nzonde David Christ)</a></p>
                     </div>
                 </div>
@@ -248,7 +259,7 @@
         </div>
     </div>
     <!-- Footer End -->
-    
+
 
     <!-- Back to Top (btn btn-lg btn-primary  btn-lg-square rounded )-->
     <a href="#" class="back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -269,7 +280,7 @@
             });
         });
     </script>
-    
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -295,7 +306,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-    
+
 
     <!-- Template Main JS File -->
     <script src="{% static 'javascript/main.js' %}"></script>
