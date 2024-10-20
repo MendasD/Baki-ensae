@@ -4,7 +4,7 @@
 
 {% block photo %}
     {% if user.photo %}
-        <img src="{{user.photo.url}}" alt="Photo de profil" >
+        <img src="{{user.photo.url}}" alt="Photo de profil" class="profile-photo">
     {% endif %}
 {% endblock %}
 
@@ -15,61 +15,109 @@
 {% block content %}
 
 <style>
-
-    body{
-        background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
-        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+    body {
+        background-color: rgba(248, 249, 249, 0.9);
+        font-family: 'Arial', sans-serif;
+        padding: 1%;
     }
 
-     .classes ul{
+    h3 {
+        text-align: center;
+        font-size: 2em;
+        color: #2E6573;
+        margin-bottom: 30px;
+    }
+
+    .classes ul {
         display: grid;
-        grid-template-columns: 1fr 1fr;  /* creer 2 colonnes égales */
-        gap: 2%;  
-        flex-wrap: wrap;
-        margin-top: 30px;
-        font-size: 20px;
-        color: white;
-        margin-bottom:90px;
-        margin-left: 5%;
-        margin-right: 5%
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  /* Responsivité: Ajuste le nombre de colonnes en fonction de la largeur */
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 90%;
     }
 
     .classes li {
-        margin-bottom: 20px;
-        color: whatsapp.color;
-        border: 1px solid lightblue;
-        background-color: rgba(46, 101, 115, 1);
-        
-        /*font-style: italic;*/
+        background-color: #2E6573;
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .classes a{
+    .classes li:hover {
+        transform: translateY(-10px);  /* Animation pour surélever la carte */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);  /* Ombre plus marquée au survol */
+    }
+
+    .classes a {
+        display: block;
         color: white;
         text-decoration: none;
-        padding: 10px 20px;
+        font-size: 1.2em;
+        text-align: center;
+        padding: 10px;
+        transition: color 0.3s ease, background-color 0.3s ease;
     }
 
-    .classes a:hover{
-        background-color: rgba(46, 101, 115, 1);
-        color: white;
-        border: 1px solid whatsapp.color;
-        transition: background-color 0.3s ease;
+    .classes a:hover {
+        background-color: #3A778A;  /* Change la couleur du fond au survol */
+        border-radius: 8px;
+        color: #fff;
     }
 
-
-    .container-fluid{
-       bottom: 0; 
+    /* Animation d'apparition */
+    .classes ul {
+        animation: fadeIn 1s ease-in-out;
     }
 
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Image de profil avec animation */
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        margin: 10px auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        animation: bounceIn 1s ease-out;
+    }
+
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+        60% {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
 </style>
 
-<h3>Ici, vous avez accès aux anciens sujets de l'ENSAE de Dakar.</h3>
+<h3>Ici, vous aurez accès aux anciens sujets de l'ENSAE de Dakar.</h3>
 
 <div class="classes">
 <ul>
     <li><a href="{% url 'ensae-as1'  %}">Analyste Statisticien première année (AS1)</a></li>
     <li><a href="{% url 'ensae-as2'  %}">Analyste Statisticien deuxième année (AS2)</a></li>
-    <li><a href="{% url 'ensae-as3'  %}">Analyste Statisticien troisième année (AS3)</a></li> 
+    <li><a href="{% url 'ensae-as3'  %}">Analyste Statisticien troisième année (AS3)</a></li>
     <li><a href="{% url 'ensae-isep1'  %}">ISE Préparatoire première année (ISEP1)</a></li>
     <li><a href="{% url 'ensae-isep2'  %}">ISE Préparatoire deuxième année (ISEP2)</a></li>
     <li><a href="{% url 'ensae-isep3'  %}">ISE Préparatoire troisième année (ISEP3)</a></li>
@@ -77,7 +125,7 @@
     <li><a href="{% url 'ensae-ise1-eco'  %}">Ingénieur statisticien Economiste première année option eco (ISE1_eco)</a></li>
     <li><a href="{% url 'ensae-ise2'  %}">Ingénieur statisticien Economiste deuxième année (ISE2)</a></li>
     <li><a href="{% url 'ensae-ise3'  %}">Ingénieur statisticien Economiste troisième année (ISE3)</a></li>
-    
+
 </ul>
 </div>
 

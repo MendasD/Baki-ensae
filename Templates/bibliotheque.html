@@ -2,10 +2,9 @@
 
 {% load static %}
 
-
 {% block photo %}
     {% if user.photo %}
-        <img src="{{user.photo.url}}" alt="Photo de profil" >
+        <img src="{{user.photo.url}}" alt="Photo de profil" class="profile-photo">
     {% endif %}
 {% endblock %}
 
@@ -15,83 +14,179 @@
 
 {% block content %}
 
-    <style>
+<style>
+    body {
+        background-color: rgba(248, 249, 249, 0.5);
+        font-family: 'Poppins', sans-serif;
+        color: #2e6573;
+        margin: 0;
+        padding: 0;
+    }
 
-        #bibliotheque{
-            color: bisque;
+    #bibliotheque{
+        color: #f8b400;
+    }
+
+    .profile-photo {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin: 10px auto;
+        display: block;
+        border: 3px solid #2e6573;
+        animation: fadeIn 1.5s;
+    }
+
+    h2 {
+        text-align: center;
+        color: #2e6573;
+        font-size: 36px;
+        margin-bottom: 20px;
+        animation: fadeIn 2s;
+    }
+
+    p {
+        font-size: 18px;
+        margin: 15px 0;
+        animation: slideIn 1.5s;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 12px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 8px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #0056b3;
+        transform: translateY(-3px);
+    }
+
+    .documents {
+        margin-bottom: 20px;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .documents p {
+        margin: 5px 0;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #eee;
+    }
+
+    .btn-primary {
+        background-color: #f8b400;
+        border-color: #f8b400;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #e0a800;
+        transform: scale(1.05);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+       .button {
+            width: 100%;
+            margin-top: 10px;
         }
 
-        body{
-            background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
-            font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+        form {
+            display: flex;
+            flex-direction: column;
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        form input {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
 
-        .button:hover {
-            background-color: #0056b3;
+        form button {
+            width: 100%;
         }
-    </style>
+    }
 
-    <h2>Bienvenue sur la partie Bibliothèque</h2>
-    <p> Cette bibliothèque comporte exactement {{nombre}} document{{nombre|pluralize}} publié{{nombre|pluralize}} par différents étudiants.</p>
-    <p>Dans cette section, vous pouvez consulter les sujets, les télécharger, et biensûr  poster d'autres documents qui pourraient éventuellement aider d'autres étudiants.</p>
-    <p>Vous pouvez également poster les mémoires en mettant comme matière "memoire", afin de faciliter la recherche des anciens mémoires</p>
-    <div style="display:inline;">
-        <div style="text-align:left;">
-             <a href="{% url 'creer_document' %}"  type="submit" class="button btn btn-primary" >Ajouter un document</a>
-        </div>
-        <div style="text-align:right;">
-        <form id="search-form" method="post" >
-            {% csrf_token %}
-            <input type="text" name="matiere" id="input-matiere" placeholder="Matière (ex: Analyse)" autocomplete="off">
-            <input type="text" name="auteur" id="input-auteur" placeholder="Auteur (ex: Mendas)" autocomplete="off">
-            <input type="text" name="classe" id="input-classe" placeholder="Classe (ex: AS1)" autocomplete="off">
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-            <button style="color:white; font-style:bold;" type="submit" class="btn btn-primary" id="btn-rechercher">Rechercher</button>
-        </form></div>
-    </div><hr>
-    {% if documents %}
-        <ul>
-            {% for doc in documents %}
-                <li class="documents" data-matiere="{{doc.matiere}}" data-auteur="{{doc.auteur}}" data-classe="{{doc.classe}}"  style="display:block;margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <p style="font-weight:bold;">Matière : {{ doc.matiere }}</p>
-                            <p>Type : {{ doc.type }}</p>
-                            <p>Classe : {{ doc.classe }}</p>
-                            <p>Posté le : {{ doc.date}}</p>
-                            {% if doc.auteur == user %}
-                                <p>Par : Vous</p>
-                            {% else %}
-                                <p>Par : {{ doc.auteur}}</p>
-                            {% endif %}
-                            <p>Description : {{ doc.description}}</p>
-                            <div style="display:inline;">
-                                <a style="margin-right:15px" href="{% url 'voirdocument' doc.id %}">Ouvrir</a>
-                                <a href="{% url 'downloaddoc' doc.id %}">Télécharger</a>
-                            </div>
-                        </div>
-                    </div><hr>
-                </li>
-                
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun document disponible pour le moment.</p>
-    {% endif %}
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>
 
-     <script src="{% static 'javascript/recherchedoc.js' %}" defer></script>   <!--L'attribut defer s'assure que le script est exécuté après que le document HTML est analysé et le DOM est construit. -->
+<h2>Bienvenue sur la partie Bibliothèque</h2>
+<p>Cette bibliothèque comporte exactement {{nombre}} document{{nombre|pluralize}} publié{{nombre|pluralize}} par différents étudiants.</p>
+<p>Vous pouvez consulter les sujets, les télécharger, et poster d'autres documents pour aider les étudiants.</p>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <a href="{% url 'creer_document' %}" class="button">Ajouter un document</a>
+    <form id="search-form" method="post" style="display: flex;">
+        {% csrf_token %}
+        <input type="text" name="matiere" id="input-matiere" placeholder="Matière (ex: Analyse)" autocomplete="off" style="margin-right: 10px;">
+        <input type="text" name="auteur" id="input-auteur" placeholder="Auteur (ex: Mendas)" autocomplete="off" style="margin-right: 10px;">
+        <input type="text" name="classe" id="input-classe" placeholder="Classe (ex: AS1)" autocomplete="off" style="margin-right: 10px;">
+        <button type="submit" class="button btn-primary">Rechercher</button>
+    </form>
+</div>
+
+<hr>
+
+{% if documents %}
+    <ul>
+        {% for doc in documents %}
+            <li class="documents" data-matiere="{{doc.matiere}}" data-auteur="{{doc.auteur}}" data-classe="{{doc.classe}}" >
+                <div>
+                    <p><strong>Matière :</strong> {{ doc.matiere }}</p>
+                    <p><strong>Type :</strong> {{ doc.type }}</p>
+                    <p><strong>Classe :</strong> {{ doc.classe }}</p>
+                    <p><strong>Posté le :</strong> {{ doc.date}}</p>
+                    <p><strong>Par :</strong> {% if doc.auteur == user %} Vous {% else %} {{ doc.auteur }} {% endif %}</p>
+                    <p><strong>Description :</strong> {{ doc.description }}</p>
+                    <div>
+                        <a href="{% url 'voirdocument' doc.id %}" class="button" style="margin-right: 10px;">Ouvrir</a>
+                        <a href="{% url 'downloaddoc' doc.id %}" class="button">Télécharger</a>
+                    </div>
+                </div>
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun document disponible pour le moment.</p>
+{% endif %}
+
+<script src="{% static 'javascript/recherchedoc.js' %}" defer></script> <!--L'attribut defer s'assure que le script est exécuté après que le document HTML est analysé et le DOM est construit. -->
 {% endblock %}
+
+

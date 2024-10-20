@@ -2,67 +2,125 @@
 
 {% load static %}
 
-
-
 {% block photo %}
     {% if user.photo %}
-        <img src="{{user.photo.url}}" alt="Photo de profil" >
+        <img src="{{ user.photo.url }}" alt="Photo de profil" class="profile-photo">
     {% endif %}
 {% endblock %}
 
 {% block email %}
-    <span>{{ user.email }}</span>
+    <span class="user-email">{{ user.email }}</span>
 {% endblock %}
 
 {% block content %}
-    
+
     <style>
+        body {
+            background-color: rgba(248, 249, 249, 0.5);
+            font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 0.5s;
+        }
 
-    body{
-        background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
-        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
+        .header {
+            text-align: center;
+            margin: 30px 0;
+            color: #333;
+        }
 
-    .semestres{
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin-top: 30px;
-        font-size: 20px;
-        color: white;
-        margin-bottom:170px;
-        
-    }
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
 
-    .semestres li {
-        margin-bottom: 20px;
-        color: whatsapp.color;
-        border: 1px solid lightblue;
-        background-color: rgba(46, 101, 115, 1);
-       
-        
-        
-        /*font-style: italic;*/
-    }
+        .header p {
+            font-size: 1.2em;
+            color: #666;
+        }
 
-    .semestres a{
-        color: white;
-        text-decoration: none;
-        padding: 10px 10px;
-    }
+        .semestres {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            font-size: 20px;
+            color: white;
+            margin-bottom: 170px;
+            padding: 20px;
+        }
 
-    .semestres a:hover{
-        background-color: rgba(46, 101, 115, 1);
-        color: white;
-        border: 1px solid whatsapp.color;
-        transition: background-color 0.3s ease;
-    }
+        .semestres li {
+            list-style: none;
+            margin-bottom: 20px;
+            border: 1px solid lightblue;
+            background-color: rgba(46, 101, 115, 1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: bounceIn 0.5s;
+        }
 
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .semestres a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .semestres li:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .semestres a:hover {
+            background-color: rgba(46, 101, 115, 0.8);
+            border: 1px solid lightblue;
+            color: #f8b400;
+        }
+
+        .additional-info {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(200, 220, 240, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .additional-info p {
+            font-size: 18px;
+            color: #333;
+            margin: 0;
+        }
+
+        p {
+            color: #333;
+            font-size: 18px;
+            margin: 20px 0;
+            text-align: center;
+        }
     </style>
 
+    <div class="header">
+        <h1>Ancien Sujets de la Classe ISE1 option economie</h1>
+        <p>Bienvenue sur la plateforme de ressources de l'ENSAE de Dakar.</p>
+    </div>
 
-    <p> Vous avez là les anciens sujets de la classe ISE1 option Economie de l'ENSAE de Dakar </p>
+    <div class="additional-info">
+        <p>Explorez les anciens sujets des semestres pour mieux vous préparer aux examens !</p>
+    </div>
     <p>Choisir le semestre :</p>
 
 <div class="semestres">

@@ -1,10 +1,10 @@
-{% extends "base.html" %}  <!-- on spécifie le template parent/mère -->
+{% extends "base.html" %}  <!-- On spécifie le template parent -->
 
-{% load static %} <!-- on charge le dossier static -->
+{% load static %} <!-- On charge le dossier static -->
 
 {% block photo %}
     {% if user.photo %}
-        <img src="{{user.photo.url}}" alt="Photo de profil" >
+        <img src="{{user.photo.url}}" alt="Photo de profil" class="profile-photo">
     {% endif %}
 {% endblock %}
 
@@ -14,46 +14,130 @@
 
 {% block content %}
     <style>
+        /* Animation d'apparition fluide */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInAnimation 0.8s ease-out forwards; /* 'forwards' permet de maintenir l'état final de l'animation */
+        }
+
         #nouscontacter{
-            color: bisque;
+            color:  #f8b400;
         }
-        body{
-            background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
-            font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
-        }
-        .contact-form {
-                width: 80%;  /* Utilisation de pourcentages pour la largeur */
-                margin: 2% auto;  /* Marges pour centrer le formulaire */
-                padding: 2%;
-                background-color: #f5f5f5;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation pour les boutons */
+        .button-hover {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button-hover:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Améliorations générales de style */
+        body {
+            background-color: rgba(248, 249, 249, 0.9);
+            font-family: 'Arial', sans-serif;
+            padding: 2% 0;
+        }
+
+        .contact-form {
+            width: 80%;
+            margin: 5% auto;
+            padding: 2%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 1; /* Assurez-vous que l'élément reste visible */
+            animation: fadeInAnimation 1s ease-out forwards;
+        }
+
         .contact-form h2 {
-            margin-bottom: 5%;
+            text-align: center;
             color: #333;
+            font-size: 1.8em;
+            margin-bottom: 2%;
+            position: relative;
         }
+
+        .contact-form h2:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #007bff;
+            margin: 0.5em auto 0;
+        }
+
         .contact-form input, .contact-form textarea {
-            width: 96%;  /* Utilisation de pourcentages pour les champs */
-            padding: 1.5%;
+            width: 100%;
+            padding: 1%;
             margin-bottom: 4%;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 1em;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s;
         }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
         .contact-form button {
-            padding: 1.5% 4%;  /* Pourcentage pour les boutons aussi */
+            display: block;
+            width: 100%;
+            padding: 1.5% 0;
             background-color: #007bff;
             border: none;
             border-radius: 4px;
             color: white;
+            font-size: 1.2em;
             cursor: pointer;
         }
+
         .contact-form button:hover {
             background-color: #0056b3;
         }
+
+        /* Animation pour l'image de profil */
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 2% auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: scaleIn 0.6s ease-in-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 
-    <div class="contact-form">
+    <div class="contact-form fade-in">
         <h2>Nous Contacter</h2>
         <form method="post">
             {% csrf_token %}
@@ -69,7 +153,10 @@
             <label for="message">Message:</label><br/>
             <textarea id="message" name="message" rows="5" required></textarea><br/>
 
-            <button type="submit">Envoyer</button>
+            <button type="submit" class="button-hover">Envoyer</button>
         </form>
     </div>
 {% endblock %}
+
+
+

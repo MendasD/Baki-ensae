@@ -1,3 +1,5 @@
+
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="">
@@ -31,8 +33,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-
-
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">  <!-- pour appliquer un style css à notre application -->
     <link rel="stylesheet" href="{% static 'css/nav_sidebar.css' %}">
 
@@ -62,7 +62,7 @@
             background-color: #0056b3; /* Couleur de survol différente */
         }
 
-         .profil {
+        .profil {
             position: fixed;
             top: 0;
             left: 0;
@@ -79,9 +79,10 @@
 
         }
 
-        .profil img {
-            height: 100%;
-            width: 75%;
+
+      .profil img {
+            height: 50px;  /* Ajustez cette valeur selon vos besoins */
+            width: 50px;   /* Ajustez cette valeur selon vos besoins */
             border-radius: 50%;
         }
 
@@ -103,6 +104,7 @@
 
         .navbar-nav a {
             margin-left: 2%; /* Espace entre les liens */
+            margin-bottom: 5%;
         }
 
         .navbar-nav a:hover {
@@ -190,6 +192,8 @@
             #footer{
                 padding: 15px;
             }
+
+
         }
 
     </style>
@@ -210,13 +214,12 @@
                         {% block email %}
                             <!-- Add email content here -->
                         {% endblock %}</a>
-
-                        <!-- Boutton de deconnexion -->
-                        <li id="logout" class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i></a>
-                        </li>
-
                     </div>
+                   <!-- Boutton de deconnexion -->
+                    <li id="logout" class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out" style="font-size:30px;color:#f8b400"></i></a>
+                    </li>
+
                 </div>
                 <div class="profile-info">
                     <div class="troisbtn">
@@ -231,6 +234,8 @@
                         <a class="nav-link" href="{% url 'bibliotheque' %}" id="bibliotheque">Bibliothèque</a>
                         <a class="nav-link" href="{% url 'mon_espace' %}" id="monespace">Mon espace</a>
                         <a class="nav-link" href="{% url 'nous_contacter' %}" id="nouscontacter">Nous contacter</a>
+
+
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 
 {% block photo %}
     {% if user.photo %}
-        <img src="{{user.photo.url}}" alt="Photo de profil" >
+        <img src="{{user.photo.url}}" alt="Photo de profil" class="profile-photo">
     {% endif %}
 {% endblock %}
 
@@ -24,7 +24,7 @@
         }
 
         #monespace{
-            color: bisque;
+            color:  #f8b400;
         }
 
         .banner {
@@ -34,7 +34,33 @@
             text-align: center;
             margin-bottom: 20px;
             border-radius: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInAnimation 0.8s ease-out forwards; /* 'forwards' permet de maintenir l'état final de l'animation */
         }
+
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-photo {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 10px auto;
+            display: block;
+            border: 3px solid #2e6573;
+            animation: fadeIn 1.5s;
+        }
+
 
         #info-publi {
             display: flex;
@@ -61,7 +87,7 @@
             margin: 5%;
         }
 
-         button#modifier, button#valider {
+         button#modifier, button#valider, button#annuler {
             background-color: #F5DEB3; /* couleur bisque */
             border: none;
             color: #333;
@@ -152,7 +178,7 @@
             <div id="partie-infos">
             <p>Nom d'utilisateur: <strong>{{user.username}}</strong></p>
             <p>Adresse Mail: <strong>{{user.email}}</strong></p>
-            <p>Mot de passe: <strong>{{user.password}}</strong></p>
+            <p>Mot de passe: <strong>........</strong></p>
             <button id="modifier" type="button">Modifier</button><br><br>
             <form id="form-modification" style="display: none;">
                 <input id="new-username" type="text" placeholder="Username" required> <br/>
@@ -162,6 +188,7 @@
                 <input id="new-photo" type="file" name="photo" accept="image/*"  id="id_photo"><br/>
 
                 <button id="valider" type="submit">Valider</button>
+                <button id="annuler" onclick="this.form.style.display='none';document.getElementById('modifier').style.display='block';">Annuler</button>
             </form>
             </div>
         </div>
@@ -170,7 +197,7 @@
             <h3><i class="fa fa-book"></i> Vos publications</h3>
             <p>Bienvenue sur ton espace personnel. Ici, tu as la possibilité de modifier tes informations, et également de voir le nombre de publications que tu as déjà faites.</p>
             <h5>En effet, tu as déjà posté <strong>{{nombre_corriges}}</strong> corrigé{{nombre_corriges|pluralize}} et <strong>{{nombre_doc}}</strong> document{{nombre_doc|pluralize}} dans la bibliothèque.</h5>
-            <p>Nous te remercions d'utiliser notre plateforme et nous t'encourageons vivement à contribuer à son amélioration en postant davantage de corrigés et de documents dans la <a href="{% url 'bibliotheque' %}">bibliothèque</a>. N'oublie pas de participer dans <a href="{% url 'home' %}">le forum.</a></p>
+            <p>Nous te remercions d'utiliser notre plateforme et nous t'encourageons vivement à contribuer à son amélioration en postant davantage de corrigés et de documents dans la <a href="{% url 'bibliotheque' %}">bibliothèque</a>.</p>
         </div>
 
         <div id="stats">
@@ -291,7 +318,8 @@
                                 'X-CSRFToken': '{{ csrf_token }}'
                             },
                             success: function(response) {
-                                alert('Modifications enregistrées avec succès!');
+                               alert("Profil mis à jour avec succès !");
+                               location.reload(); // Recharger la page après mise à jour
                             },
                             error: function(xhr, status, error) {
                                 console.error('Erreur:', xhr.responseJSON ? xhr.responseJSON.error : error);
