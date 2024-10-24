@@ -16,7 +16,7 @@ class Utilisateur (models.Model) :
 
     def __str__(self) :
         return self.username
-    
+
 
 class Sujets(models.Model):
 
@@ -29,10 +29,10 @@ class Sujets(models.Model):
     annee = models.CharField(max_length=50)
     date_upload = models.DateField(auto_now_add=True)
     doc = models.FileField(upload_to='Anciens_Sujets/',unique=True, blank=True) # Pour des raisons de telechargement du fichier
-    
+
     def __str__(self):
         return self.titre
-    
+
 class Corriges(models.Model):
 
     id = models.AutoField(primary_key=True)
@@ -45,7 +45,7 @@ class Corriges(models.Model):
 
     def __str__(self):
         return self.titre
-    
+
 class Documents(models.Model):
     id = models.AutoField(primary_key=True)
     matiere = models.CharField(max_length=50)

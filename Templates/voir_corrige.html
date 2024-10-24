@@ -4,7 +4,7 @@
 
 
 {% block photo %}
-    {% if user %}
+    {% if user.photo %}
         <img src="{{user.photo.url}}" alt="Photo de profil" >
     {% endif %}
 {% endblock %}
@@ -18,7 +18,7 @@
 <style>
    body{
         background-color: rgba(248,249,249, 0.5); /*rgba(50, 100, 120, 0.5);*/
-        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif; 
+        font-family: 'Times New Roman', Arial, serif, Helvetica, sans-serif;
     }
 
 </style>
@@ -41,16 +41,16 @@
                                 <a style="margin-right:15px" href="{% url 'see_corrige' corrige.id %}">Ouvrir</a>
                                 <a href="{% url 'download_corrige' corrige.id %}">Télécharger</a>
                             </div>
-                            
+
                             <div class="supprimer" style="text-align: right;">
                                 <a style="margin-left:50px" href="{% url 'supprimer_corrige' corrige.id  %}">Supprimer ce post</a>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div><hr>
                 </li>
-                
+
             {% endfor %}
         </ul>
     {% else %}
@@ -59,17 +59,17 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-         // Sélectionne tous les liens ayant la classe '.supprimer' 
+         // Sélectionne tous les liens ayant la classe '.supprimer'
         var liens = document.querySelectorAll('.supprimer');
 
         liens.forEach(function(link) {
             var corrige_auteur = link.closest('.liste').getAttribute('name-user');; // Récupère l'attribut 'name-user' du parent de chaque lien
-            var currentUser = `{{ user }}`; 
-            
+            var currentUser = `{{ user }}`;
+
             if (corrige_auteur === currentUser) {
-                link.style.display = 'inline'; 
+                link.style.display = 'inline';
             } else {
-                link.style.display = 'none'; 
+                link.style.display = 'none';
             }
         });
     });

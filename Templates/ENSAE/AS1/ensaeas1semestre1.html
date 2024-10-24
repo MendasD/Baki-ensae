@@ -3,53 +3,139 @@
 {% load static %}
 
 
-{% block photo %}
-    {% if user.photo %}
-        <img src="{{user.photo.url}}" alt="Photo de profil" >
-    {% endif %}
-{% endblock %}
+   {% block photo %}
+        {% if user.photo %}
+            <img src="{{ user.photo.url }}" alt="Photo de profil" class="profile-photo">
+        {% endif %}
+    {% endblock %}
 
-{% block email %}
-    <span>{{ user.email }}</span>
-{% endblock %}
+    {% block email %}
+        <span>{{ user.email }}</span>
+    {% endblock %}
 
-{% block content %}
-    <h2>Liste des Sujets pour ENSAE AS1 Semestre 1</h2>
-    <p>Vous pouvez consulter les sujets, télécharger les documents, poster des corrections et voir les propositions de correction.</p>
-    <div style="text-align:right;">
-    <form id="search-form" method="post" >
-        {% csrf_token %}
-        <input type="text" name="matiere" id="input-matiere" placeholder="Matière (ex: Analyse)" autocomplete="off">
-        <input type="text" name="annee" id="input-annee" placeholder="Année (ex: 2013-2014)" autocomplete="off">
 
-        <button style="color:white; font-style:bold;" type="submit" class="btn btn-primary" id="btn-rechercher">Rechercher</button>
-    </form></div><hr>
-    {% if sujets %}
-        <ul>
+    <!-- Contenu principal -->
+    {% block content %}
+
+    <style>
+        /* Styles personnalisés */
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .profile-photo {
+            object-fit: cover;
+            border: 2px solid #2e6573;
+            animation: fadeIn 2s;
+        }
+
+        .sujet-list li {
+            transition: all 0.3s ease;
+        }
+
+        .sujet-list li:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Styles responsives */
+        @media (max-width: 768px) {
+            .sujets p {
+                font-size: 0.9rem;
+            }
+
+            .sujets .btn {
+                font-size: 0.8rem;
+            }
+
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="container mt-4 animate__animated animate__fadeIn">
+        <h2 class="text-center animate__animated animate__fadeInUp">Liste des Sujets pour ENSAE AS1 Semestre 1</h2>
+        <p class="text-center">Consultez les sujets, téléchargez les documents, proposez des corrections et voyez les propositions de correction.</p>
+
+        <div class="text-end animate__animated animate__fadeInUp animate__delay-2s">
+            <form id="search-form" method="post" class="row g-3 justify-content-end">
+                {% csrf_token %}
+                <div class="col-12 col-md-5">
+                    <input type="text" class="form-control" name="matiere" id="input-matiere" placeholder="Matière (ex: Analyse)" autocomplete="off">
+                </div>
+                <div class="col-12 col-md-4">
+                    <input type="text" class="form-control" name="annee" id="input-annee" placeholder="Année (ex: 2013-2014)" autocomplete="off">
+                </div>
+                <div class="col-12 col-md-3 text-md-end">
+                    <button class="btn btn-primary w-100 animate__animated animate__zoomIn" type="submit" id="btn-rechercher">Rechercher</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+
+        {% if sujets %}
+        <ul class="list-group sujet-list animate__animated animate__fadeInUp animate__delay-3s">
             {% for sujet in sujets %}
-                <li class="sujets" data-matiere="{{sujet.matiere}}" data-annee="{{sujet.annee}}"  style="display:block;margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+            <li class="list-group-item sujets shadow-sm p-3 mb-4 rounded animate__animated animate__slideInUp" data-matiere="{{ sujet.matiere }}" data-annee="{{ sujet.annee }}">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <p><strong>Matière :</strong> {{ sujet.matiere }}</p>
+                        <p><strong>Épreuve :</strong> {{ sujet.titre }}</p>
+                        <p><strong>Année :</strong> {{ sujet.annee }}</p>
                         <div>
-                            <p>Matière : {{ sujet.matiere }}</p>
-                            <p>Épreuve : {{ sujet.titre }}</p>
-                            <p>Année : {{ sujet.annee }}</p>
-                            <div style="display:inline;">
-                                <a style="margin-right:15px" href="{% url 'see_sujet' sujet.id %}">Ouvrir</a>
-                                <a href="{% url 'download' sujet.id %}">Télécharger</a>
-                            </div>
+                            <a href="{% url 'see_sujet' sujet.id %}" class="btn btn-outline-primary btn-sm me-2 mb-2 animate__animated animate__fadeInLeft">Ouvrir</a>
+                            <a href="{% url 'download' sujet.id %}" class="btn btn-outline-success btn-sm mb-2 animate__animated animate__fadeInRight">Télécharger</a>
                         </div>
-                        <div style="text-align: right;">
-                            <a style="margin-right:15px" href="{% url 'poster_corrige' sujet.id  %}">Proposer une correction</a>
-                            <a href="{% url 'see_correction' sujet.id %}">Voir les propositions de correction</a>
-                        </div>
-                    </div><hr>
-                </li>
-                
+                    </div>
+                    <div class="col-12 col-md-6 text-md-end">
+                        <a href="{% url 'poster_corrige' sujet.id %}" class="btn btn-outline-warning btn-sm me-2 mb-2 animate__animated animate__fadeInLeft">Proposer une correction</a>
+                        <a href="{% url 'see_correction' sujet.id %}" class="btn btn-outline-info btn-sm mb-2 animate__animated animate__fadeInRight">Voir les propositions</a>
+                    </div>
+                </div>
+            </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <p>Aucun sujet disponible.</p>
-    {% endif %}
+        {% else %}
+        <p class="text-center text-muted">Aucun sujet disponible.</p>
+        {% endif %}
+    </div>
 
-     <script src="{% static 'javascript/recherche.js' %}" defer></script>   <!--L'attribut defer s'assure que le script est exécuté après que le document HTML est analysé et le DOM est construit. -->
-{% endblock %}
+     <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Script de recherche -->
+    <script src="{% static 'javascript/recherche.js' %}" defer></script>
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
